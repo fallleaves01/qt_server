@@ -53,7 +53,8 @@ class SocketScanner {
 
    public:
     explicit SocketScanner(int _port) : port(_port) {
-        memset(this, 0, sizeof(*this));
+        memset(&myaddr, 0, sizeof(myaddr));
+        socketid = 0;
 
         myaddr.sin_family = AF_INET;
         myaddr.sin_port = htons(port);
@@ -77,7 +78,7 @@ class SocketScanner {
         while (true) {
             SocketClient client(socketid);
             fpool.emplace_back(std::async(std::launch::async, [](SocketClient c) {
-                c.work();
+                return c.work();
             }, client));
         }
     }
