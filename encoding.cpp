@@ -41,7 +41,7 @@ std::string Encoding::Data::encode() const {
 std::vector<std::string> Encoding::Data::splitDataPack() const {
     std::string data = this->encode();
     std::vector<std::string> dataPack;
-    for (int i = 0; i < data.length(); i += SplitLength) {
+    for (int i = 0; i < (int)data.length(); i += SplitLength) {
         dataPack.emplace_back(data.substr(i, SplitLength));
     }
     return dataPack;

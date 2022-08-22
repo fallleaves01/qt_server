@@ -1,6 +1,6 @@
-main: main.cpp encoding.o
+main: main.cpp encoding.o scanner.hpp worklog.hpp
 	g++ -o main main.cpp encoding.o -lpthread -Wall -std=c++17
-debug: main.cpp encoding.o
+debug: main.cpp encoding.o scanner.hpp worklog.hpp
 	g++ -o main main.cpp encoding.o -lpthread -Wall -std=c++17 -g
 
 encoding.o: encoding.cpp encoding.h

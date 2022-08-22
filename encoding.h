@@ -2,7 +2,7 @@
 #define ENCODING_H
 
 #include <string>
-#include<vector>
+#include <vector>
 
 namespace Encoding {
 inline std::string encode(int val) {

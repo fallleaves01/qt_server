@@ -43,7 +43,9 @@ class SocketClient {
             }
             dataStr += std::string(buf, len);
         }
-        return Encoding::Data(dataStr);
+        Encoding::Data rec(dataStr);
+        std::cerr << "received content : " << rec.getContent() << std::endl;
+        return rec;
     }
     void sendData(const Encoding::Data &data) {
         auto dataPack = data.splitDataPack();
@@ -120,7 +122,7 @@ class SocketScanner {
         while (true) {
             SocketClient client(socketid);
             fpool.emplace_back(std::async(std::launch::async, [](SocketClient c) {
-                return c.workPlainText();
+                return c.workData();
             }, client));
         }
     }
