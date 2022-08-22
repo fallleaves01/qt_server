@@ -7,6 +7,7 @@
 #include <future>
 #include <vector>
 #include "worklog.hpp"
+#include "encoding.h"
 
 class SocketClient {
     int cid;
@@ -24,9 +25,50 @@ class SocketClient {
         std::cerr << "client address : " << inet_ntoa(client.sin_addr)
                   << std::endl;
     }
-    int work() {
+    Encoding::Data readData() {
+        static char buf[Encoding::Data::SplitLength];
+        memset(buf, 0, sizeof(buf));
+        int len = recv(cid, buf, sizeof(buf), 0);
+        if (len == 0) {
+            throw Worklog("disconnected", 0);
+        }
+        std::string dataStr(buf, len);
+        int dataLen = Encoding::decode(dataStr.substr(0, 4));
+        std::cerr << "received dataPack of length " << dataLen << std::endl;
+        while ((int)dataStr.length() < dataLen) {
+            memset(buf, 0, sizeof(buf));
+            int len = recv(cid, buf, sizeof(buf), 0);
+            if (len == 0) {
+                throw Worklog("disconnected", 0);
+            }
+            dataStr += std::string(buf, len);
+        }
+        return Encoding::Data(dataStr);
+    }
+    void sendData(const Encoding::Data &data) {
+        auto dataPack = data.splitDataPack();
+        for (auto s : dataPack) {
+            int tag = send(cid, s.c_str(), s.length(), 0);
+            std::cerr << tag << std::endl;
+        }
+    }
+    int workData() {
         try {
-            while (1) {
+            while (true) {
+                Encoding::Data message = readData();
+                sendData(message);
+            }
+        } catch (Worklog e) {
+            e.post();
+            if (e.has_error()) {
+                e.exit();
+            }
+            return e.geteid();
+        }
+    }
+    int workPlainText() {
+        try {
+            while (true) {
                 static char buf[1024];
                 memset(buf, 0, sizeof(buf));
                 int len = recv(cid, buf, sizeof(buf), 0);
@@ -78,7 +120,7 @@ class SocketScanner {
         while (true) {
             SocketClient client(socketid);
             fpool.emplace_back(std::async(std::launch::async, [](SocketClient c) {
-                return c.work();
+                return c.workPlainText();
             }, client));
         }
     }

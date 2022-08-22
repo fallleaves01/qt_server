@@ -2,6 +2,7 @@
 #define ENCODING_H
 
 #include <string>
+#include<vector>
 
 namespace Encoding {
 inline std::string encode(int val) {
@@ -25,13 +26,15 @@ class Data {
     std::string content;
 
    public:
+    static const int SplitLength = 1024;
     explicit Data(int _type,
                   int _senderUid,
                   int _receiverUid,
                   const std::string& _time,
                   const std::string& _content);
     explicit Data(std::string data);
-    std::string encode();
+    std::string encode() const;
+    std::vector<std::string> splitDataPack() const;
 };
 }  // namespace Encoding
 

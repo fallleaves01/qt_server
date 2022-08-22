@@ -26,7 +26,7 @@ Encoding::Data::Data(std::string data) {
     content = data.substr(24 + timeSize);
 }
 
-std::string Encoding::Data::encode() {
+std::string Encoding::Data::encode() const {
     std::string data = Encoding::encode(dataSize);
     data += Encoding::encode(type);
     data += Encoding::encode(senderUid);
@@ -36,4 +36,13 @@ std::string Encoding::Data::encode() {
     data += Encoding::encode(contentSize);
     data += content;
     return data;
+}
+
+std::vector<std::string> Encoding::Data::splitDataPack() const {
+    std::string data = this->encode();
+    std::vector<std::string> dataPack;
+    for (int i = 0; i < data.length(); i += SplitLength) {
+        dataPack.emplace_back(data.substr(i, SplitLength));
+    }
+    return dataPack;
 }
