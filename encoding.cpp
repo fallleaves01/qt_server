@@ -46,3 +46,19 @@ std::vector<std::string> Encoding::Data::splitDataPack() const {
     }
     return dataPack;
 }
+
+int Encoding::Data::getType() const {
+    return type;
+}
+int Encoding::Data::getSenderUid() const {
+    return senderUid;
+}
+int Encoding::Data::getReceiverUid() const {
+    return receiverUid;
+}
+std::string Encoding::Data::getTime() const {
+    return time;
+}
+std::string Encoding::Data::getContent() const {
+    return content;
+}

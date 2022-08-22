@@ -35,6 +35,12 @@ class Data {
     explicit Data(std::string data);
     std::string encode() const;
     std::vector<std::string> splitDataPack() const;
+
+    int getType() const;
+    int getSenderUid() const;
+    int getReceiverUid() const;
+    std::string getTime() const;
+    std::string getContent() const;
 };
 }  // namespace Encoding
 
