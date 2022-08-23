@@ -15,6 +15,7 @@
 ## 请求
 + 获取用户信息
 + 获取好友列表
++ 获取群聊信息
 + 获取群聊列表
 + 获取群聊成员
 + 获取聊天记录
@@ -130,3 +131,65 @@
 + groupId       ：群聊的id
 + time          ：添加时间
 + content       ：消息具体内容
+
+# 请求型说明
+## 获取用户信息
+### 请求方 (GetUserInfo): 传入请求者uid，目标用户uid和时间
++ type          ：Data::GET_USER_INFO
++ senderUid     ：请求者的Uid
++ receiverUid   ：目标用户的Uid
++ time          ：时间
+
+### 返回 (UserInfo): 传入用户uid，用户名，在线状态
++ type          ：Data::USER_INFO
++ userId        ：目标用户的Uid
++ userName      ：目标用户的名字
++ onlineTag     ：目标用户的在线状态
+
+## 获取好友列表
+### 请求方 (GetFriendList): 传入请求者uid和时间
++ type          ：Data::GET_FRIEND_LIST
++ senderUid     ：请求者的Uid
++ time          ：时间
+
+### 返回 (FriendList): 传入用户uid，好友列表
++ type          ：Data::FRIEND_LIST
++ userId        ：目标用户的Uid
++ friendList    ：目标用户的好友的uid数组
+
+## 获取群聊信息
+### 请求方 (GetGroupInfo): 传入请求者uid，目标群聊uid和时间
++ type          ：Data::GET_GROUP_INFO
++ senderUid     ：请求者的Uid
++ groupId       ：目标群聊的Uid
++ time          ：时间
+### 返回 (GroupInfo): 传入群聊id，群聊名称，人数
++ type          ：Data::GROUP_INFO
++ groupId       ：目标群聊的Uid
++ groupName     ：目标群聊的名字
++ userCnt       ：群聊人数
+
+## 获取群聊列表
+### 请求方 (GetGroupList): 传入请求者uid和时间
++ type          ：Data::GET_GROUP_LIST
++ senderUid     ：请求者的Uid
++ time          ：时间
+
+### 返回 (GroupList): 传入用户uid，时间，群聊列表
++ type          ：Data::GROUP_LIST
++ userId        ：目标用户的Uid
++ groupList     ：目标用户的群聊的id数组
+
+## 获取群聊成员
+### 请求方 (GetGroupUser): 传入请求者uid，目标群聊uid和时间
++ type          ：Data::GET_GROUP_USER
++ senderUid     ：请求者的Uid
++ receiverUid   ：目标群聊的Uid
++ time          ：时间
+
+### 返回 (GroupUser): 传入群聊id，时间，成员列表
++ type          ：Data::GROUP_USER
++ groupId       ：目标群聊的Id
++ userList      ：目标群聊的成员id数组
+
+## 获取聊天记录
