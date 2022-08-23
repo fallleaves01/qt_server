@@ -37,6 +37,7 @@ class DataStream {
     std::string s;
 
    public:
+    DataStream() {}
     DataStream(std::string _s) : s(_s) {}
     std::string getStr() const {
         return s;
@@ -61,6 +62,31 @@ class DataStream {
         return out;
     }
 };
+
+template<typename T>
+std::string encodeArray(const std::vector<T> &arr) {
+    int size = arr.size();
+    DataStream ds;
+    ds << size;
+    for (int i = 0; i < size; i++) {
+        ds << arr[i];
+    }
+    return ds.getStr();
+}
+
+template<typename T>
+std::vector<T> decodeArray(const std::string &s) {
+    DataStream ds(s);
+    int size = 0;
+    ds >> size;
+    std::vector<T> r;
+    for (int i = 0; i < size; i++) {
+        T now;
+        ds >> now;
+        r.emplace_back(now);
+    }
+    return r;
+}
 
 class Data {
     /*
@@ -109,6 +135,10 @@ class Data {
     static const int REGISTER_MESSAGE = 3;
     static const int ADDFRIEND_MESSAGE = 4;
     static const int ADDFRIEND_CHECK = 5;
+    static const int CREATE_GROUP_MESSAGE = 6;
+    static const int CREATE_GROUP_CHECK = 7;
+    static const int ADD_GROUP_MESSAGE = 8;
+    static const int ADD_GROUP_CHECK = 9;
 };
 }  // namespace Encoding
 
