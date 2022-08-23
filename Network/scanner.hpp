@@ -37,7 +37,7 @@ class SocketClient {
             throw Worklog("disconnected", 0);
         }
         std::string dataStr(buf, len);
-        int dataLen = Encoding::decode(dataStr.substr(0, 4));
+        int dataLen = Encoding::decodeInt(dataStr.substr(0, 4));
         std::cerr << "received dataPack of length " << dataLen << std::endl;
         while ((int)dataStr.length() < dataLen) {
             memset(buf, 0, sizeof(buf));

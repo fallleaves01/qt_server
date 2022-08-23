@@ -9,29 +9,18 @@ Encoding::Data::Data(int _type,
       senderUid(_senderUid),
       receiverUid(_receiverUid),
       time(_time),
-      content(_content) {
-}
+      content(_content) {}
 
 Encoding::Data::Data(std::string data) {
-    type = decode(data.substr(4, 4));
-    senderUid = decode(data.substr(8, 4));
-    receiverUid = decode(data.substr(12, 4));
-    auto ptime = decodeStr(data.substr(16));
-    int timeSize = ptime.first + 4;
-    time = ptime.second;
-    auto pcontent = decodeStr(data.substr(16 + timeSize));
-    content = pcontent.second;
+    DataStream ds(data.substr(4));
+    ds >> type >> senderUid >> receiverUid >> time >> content;
 }
 
 std::string Encoding::Data::encode() const {
-    int dataSize = 24 + time.length() + content.length();
-    std::string data = Encoding::encode(dataSize);
-    data += Encoding::encode(type);
-    data += Encoding::encode(senderUid);
-    data += Encoding::encode(receiverUid);
-    data += Encoding::encodeStr(time);
-    data += Encoding::encodeStr(content);
-    return data;
+    DataStream ds("");
+    ds << type << senderUid << receiverUid << time << content;
+    int dataSize = ds.getStr().length() + 4;
+    return encodeInt(dataSize) + ds.getStr();
 }
 
 std::vector<std::string> Encoding::Data::splitDataPack() const {

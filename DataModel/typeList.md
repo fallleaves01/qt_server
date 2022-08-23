@@ -21,38 +21,45 @@
 
 # 功能型说明
 ## 登录
-### 发起方
-+ type          ：Data::LOGIN
-+ senderUid     ：发起登录申请的Uid
+### 发起方 (LoginMessage: 传入时间、用户名和密码)
++ type          ：Data::LOGIN_MESSAGE
++ senderUid     ：0，代表未登录用户
 + receiverUid   ：0，代表服务端本身
 + time          ：登录时间
-+ content       ：使用哈希算法加密后的密码
++ userName      ：用户名
++ password      ：使用哈希算法加密后的密码
 
-### 返回
-+ type          ：Data::LOGIN
+### 返回 (LoginCheck: 传入时间、用户名、用户Id和登陆状态)
++ type          ：Data::LOGIN_CHECK
 + senderUid     ：0，代表服务端本身
-+ receiverUid   ：发起登录申请的Uid
++ receiverUid   ：若成功登陆，则为对应用户Id，否则为0
 + time          ：登录时间
-+ content       ：登录状态，具体分为
++ userName      ：用户名
++ state         ：登录状态，具体分为
     + DataLogin::SUCCESS ：成功登录
-    + DataLogin::NOUSER ：找不到对应用户
+    + DataLogin::USERNOTFOUND ：找不到对应用户
     + DataLogin::WRONGPASSWORD ：密码错误
 
 ## 注册
-### 发起方
-+ type          ：Data::REGISTER
+### 发起方 (RegisterMessage : 传入三个字符串：时间、用户名和密码)
++ type          ：Data::REGISTER_MESSAGE
 + senderUid     ：0，未注册用户没有Uid
 + receiverUid   ：0，代表服务端本身
 + time          ：注册时间
 + userName      ：用户名
 + password      ：使用哈希算法加密后的密码
 
-### 返回
-+ type          ：Data::REGISTER
+### 返回 ([LoginCheck](#返回-logincheck))
++ type          ：Data::LOGIN_CHECK
 + senderUid     ：0，代表服务端本身
-+ receiverUid   ：为注册成功的用户分配的Uid
++ receiverUid   ：为该用户分配的uid
 + time          ：登录时间
-+ content       ：注册成功固定为DataLogin::SUCCESS，代表成功登录
++ userName      ：用户名
++ state         ：登录状态，具体分为
+    + DataLogin::SUCCESS ：成功登录 (成功注册用户默认为成功登陆)
+    + DataLogin::USERNOTFOUND ：找不到对应用户
+    + DataLogin::WRONGPASSWORD ：密码错误
+
 
 ## 添加好友
 ### 发起方

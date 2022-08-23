@@ -6,7 +6,7 @@
 
 namespace Encoding {
 //对于int的编码
-inline std::string encode(int val) {
+inline std::string encodeInt(int val) {
     std::string s = "";
     for (int i = 0; i < 32; i += 8) {
         s += (unsigned char)((val >> i) & 0xff);
@@ -14,7 +14,7 @@ inline std::string encode(int val) {
     return s;
 }
 //对于int的解码
-inline int decode(std::string s) {
+inline int decodeInt(std::string s) {
     int val = 0;
     for (int i = 0; i < 4; i++) {
         val |= (unsigned char)(s[i]) << (i * 8);
@@ -24,13 +24,43 @@ inline int decode(std::string s) {
 //对于std::string的编码
 inline std::string encodeStr(std::string str) {
     int len = str.length();
-    return encode(len) + str;
+    return encodeInt(len) + str;
 }
 //对于std::string的解码
 inline std::pair<int, std::string> decodeStr(std::string s) {
-    int len = decode(s.substr(0, 4));
+    int len = decodeInt(s.substr(0, 4));
     return std::make_pair(len, s.substr(4, len));
 }
+
+//用于解析编码串的对象
+class DataStream {
+    std::string s;
+
+   public:
+    DataStream(std::string _s) : s(_s) {}
+    std::string getStr() const {
+        return s;
+    }
+    friend DataStream& operator>>(DataStream& in, int& val) {
+        val = decodeInt(in.s);
+        in.s = in.s.substr(4);
+        return in;
+    }
+    friend DataStream& operator>>(DataStream& in, std::string& val) {
+        auto ps = decodeStr(in.s);
+        val = ps.second;
+        in.s = in.s.substr(4 + ps.first);
+        return in;
+    }
+    friend DataStream& operator<<(DataStream &out, const int &val) {
+        out.s += encodeInt(val);
+        return out;
+    }
+    friend DataStream& operator<<(DataStream &out, const std::string &val) {
+        out.s += encodeStr(val);
+        return out;
+    }
+};
 
 class Data {
     /*
@@ -74,8 +104,9 @@ class Data {
     std::string getContent() const;
 
 //下面是关于Data类的type的标识符
-    static const int LOGIN = 1;
-    static const int REGISTER = 2;
+    static const int LOGIN_MESSAGE = 1;
+    static const int LOGIN_CHECK = 2;
+    static const int REGISTER_MESSAGE = 3;
 };
 }  // namespace Encoding
 
