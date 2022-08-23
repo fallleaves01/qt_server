@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <cstring>
 #include <future>
+#include <mutex>
 #include <vector>
 #include "worklog.hpp"
 #include "encoding.h"
@@ -13,6 +14,7 @@ class SocketClient {
     int cid;
     sockaddr_in client;
     socklen_t clientSize;
+    std::mutex sendLock, receivedLock;
 
    public:
     explicit SocketClient(int socketid) : clientSize(sizeof(client)) {
@@ -26,6 +28,7 @@ class SocketClient {
                   << std::endl;
     }
     Encoding::Data readData() {
+        std::lock_guard<std::mutex> lock(receivedLock);
         static char buf[Encoding::Data::SplitLength];
         memset(buf, 0, sizeof(buf));
         int len = recv(cid, buf, sizeof(buf), 0);
@@ -48,6 +51,7 @@ class SocketClient {
         return rec;
     }
     void sendData(const Encoding::Data &data) {
+        std::lock_guard<std::mutex> lock(sendLock);
         auto dataPack = data.splitDataPack();
         for (auto s : dataPack) {
             int tag = send(cid, s.c_str(), s.length(), 0);
@@ -121,9 +125,9 @@ class SocketScanner {
         std::vector<std::future<int>> fpool;
         while (true) {
             SocketClient client(socketid);
-            fpool.emplace_back(std::async(std::launch::async, [](SocketClient c) {
-                return c.workData();
-            }, client));
+            fpool.emplace_back(std::async(std::launch::async, [&client]() {
+                return client.workData();
+            }));
         }
     }
 };
