@@ -107,6 +107,8 @@ class Data {
     static const int LOGIN_MESSAGE = 1;
     static const int LOGIN_CHECK = 2;
     static const int REGISTER_MESSAGE = 3;
+    static const int ADDFRIEND_MESSAGE = 4;
+    static const int ADDFRIEND_CHECK = 5;
 };
 }  // namespace Encoding
 

@@ -2,7 +2,7 @@
 ## [功能型](#功能型说明)
 + [登录](#登录)
 + [注册](#注册)
-+ 添加好友
++ [添加好友](#添加好友)
 + 创建群聊
 + 添加群聊
 
@@ -49,28 +49,37 @@
 + userName      ：用户名
 + password      ：使用哈希算法加密后的密码
 
-### 返回 ([LoginCheck](#返回-logincheck))
+### 返回 ([LoginCheck](#返回-logincheck-传入时间用户名用户id和登陆状态))
 + type          ：Data::LOGIN_CHECK
 + senderUid     ：0，代表服务端本身
 + receiverUid   ：为该用户分配的uid
 + time          ：登录时间
 + userName      ：用户名
 + state         ：登录状态，具体分为
-    + DataLogin::SUCCESS ：成功登录 (成功注册用户默认为成功登陆)
-    + DataLogin::USERNOTFOUND ：找不到对应用户
-    + DataLogin::WRONGPASSWORD ：密码错误
+    + LoginCheck::SUCCESS ：成功登录 (成功注册用户默认为成功登陆)
+    + LoginCheck::USERNOTFOUND ：找不到对应用户
+    + LoginCheck::WRONGPASSWORD ：密码错误
 
 
 ## 添加好友
-### 发起方
-+ type          ：Data::ADDFRIEND
+### 发起方 (AddFriendMessage : 传入发起方、接收方的uid，添加时间和备注信息)
++ type          ：Data::ADDFRIEND_MESSAGE
 + senderUid     ：添加方的Uid
 + receiverUid   ：被添加方的Uid
 + time          ：添加时间
-+ content       ：无
-### 接收方
-+ type          ：Data::ADDFRIEND
++ content       ：备注信息
+### 接收方 ([AddFriendMessage](#发起方-addfriendmessage--传入发起方接收方的uid添加时间和备注信息))
++ type          ：Data::ADDFRIEND_MESSAGE
 + senderUid     ：添加方的Uid
 + receiverUid   ：被添加方的Uid
 + time          ：注册时间
-+ content       ：
++ content       ：备注信息
+
+### 返回 (AddFriendCheck : 传入添加好友的数据（AddFriendMessage类），和添加的状态)
++ type          ：Data::ADDFRIEND_CHECK
++ senderUid     ：添加方的Uid
++ receiverUid   ：被添加方的Uid
++ time          ：注册时间
++ state         ：添加好友的状态，分为：
+    + AddFriendCheck::SUCCESS ：成功添加好友
+    + AddFriendCheck::REJECT ：添加好友被拒绝
