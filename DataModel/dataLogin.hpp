@@ -7,9 +7,9 @@ class LoginMessage : public Data {
 
    public:
     //传入时间、用户名与密码，生成一个登陆信息的对象
-    explicit LoginMessage(std::string _time,
-                          std::string _userName,
-                          std::string _password)
+    explicit LoginMessage(const std::string &_time,
+                          const std::string &_userName,
+                          const std::string &_password)
         : Data(Data::LOGIN_MESSAGE,
                0,
                0,
@@ -19,7 +19,11 @@ class LoginMessage : public Data {
           password(_password) {}
 
     //对应的解码函数
-    explicit LoginMessage(std::string s) : Data(s) {
+    explicit LoginMessage(const std::string &s) : Data(s) {
+        DataStream ds(getContent());
+        ds >> userName >> password;
+    }
+    explicit LoginMessage(const Data &d) : Data(d) {
         DataStream ds(getContent());
         ds >> userName >> password;
     }
@@ -35,8 +39,8 @@ class LoginCheck : public Data {
 
    public:
     //传入时间、用户名、用户ID与登录状态，生成一个关于登陆是否成功的检查信息
-    explicit LoginCheck(std::string _time,
-                        std::string _userName,
+    explicit LoginCheck(const std::string &_time,
+                        const std::string &_userName,
                         int _userId,
                         int _state)
         : Data(Data::LOGIN_CHECK,
@@ -48,10 +52,15 @@ class LoginCheck : public Data {
           state(_state) {}
 
     //对应的解码函数
-    explicit LoginCheck(std::string s) : Data(s) {
+    explicit LoginCheck(const std::string &s) : Data(s) {
         DataStream ds(getContent());
         ds >> userName >> state;
     }
+    explicit LoginCheck(const Data &d) : Data(d) {
+        DataStream ds(getContent());
+        ds >> userName >> state;
+    }
+
     //下面是用于表示状态的标识符
     static const int SUCCESS = 0;
     static const int USERNOTFOUND = 1;
@@ -67,9 +76,9 @@ class RegisterMessage : Data {
 
    public:
     //传入三个参数，时间、用户名和密码
-    explicit RegisterMessage(std::string _time,
-                             std::string _userName,
-                             std::string _password)
+    explicit RegisterMessage(const std::string &_time,
+                             const std::string &_userName,
+                             const std::string &_password)
         : Data(Data::REGISTER_MESSAGE,
                0,
                0,
@@ -77,11 +86,17 @@ class RegisterMessage : Data {
                encodeStr(_userName) + encodeStr(_password)),
           userName(_userName),
           password(_password) {}
+
     //对应的解码函数
-    explicit RegisterMessage(std::string s) : Data(s) {
+    explicit RegisterMessage(const std::string &s) : Data(s) {
         DataStream ds(getContent());
         ds >> userName >> password;
     }
+    explicit RegisterMessage(const Data &d) : Data(d) {
+        DataStream ds(getContent());
+        ds >> userName >> password;
+    }
+
     // get系列函数
     std::string getUserName() const { return userName; }
     std::string getPassword() const { return password; }

@@ -14,7 +14,7 @@ inline std::string encodeInt(int val) {
     return s;
 }
 //对于int的解码
-inline int decodeInt(std::string s) {
+inline int decodeInt(const std::string &s) {
     int val = 0;
     for (int i = 0; i < 4; i++) {
         val |= (unsigned char)(s[i]) << (i * 8);
@@ -22,12 +22,12 @@ inline int decodeInt(std::string s) {
     return val;
 }
 //对于std::string的编码
-inline std::string encodeStr(std::string str) {
+inline std::string encodeStr(const std::string &str) {
     int len = str.length();
     return encodeInt(len) + str;
 }
 //对于std::string的解码
-inline std::pair<int, std::string> decodeStr(std::string s) {
+inline std::pair<int, std::string> decodeStr(const std::string &s) {
     int len = decodeInt(s.substr(0, 4));
     return std::make_pair(len, s.substr(4, len));
 }
@@ -90,7 +90,7 @@ class Data {
                   const std::string& _time,
                   const std::string& _content);
     //从一个按照规定格式编码的二进制串中构造变量，相当于对串进行解码，构造后即可使用所有的get函数获取数据对象内容
-    explicit Data(std::string data);
+    explicit Data(const std::string &data);
     //将一个对象进行编码，返回一个使用std::string存储的二进制串
     std::string encode() const;
     //将数据包按照规定大小切分，便于网络传输

@@ -11,7 +11,7 @@ Encoding::Data::Data(int _type,
       time(_time),
       content(_content) {}
 
-Encoding::Data::Data(std::string data) {
+Encoding::Data::Data(const std::string &data) {
     DataStream ds(data.substr(4));
     ds >> type >> senderUid >> receiverUid >> time >> content;
 }
