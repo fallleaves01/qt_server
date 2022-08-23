@@ -14,9 +14,10 @@ class SocketClient {
     int cid;
     sockaddr_in client;
     socklen_t clientSize;
-    std::mutex sendLock, receivedLock;
+    std::mutex sendLock;
 
    public:
+    //对应一个连接到的客户端生成一个客户端对象
     explicit SocketClient(int socketid) : clientSize(sizeof(client)) {
         std::cerr << "waiting for the client" << std::endl;
         cid = accept(socketid, (sockaddr*)(&client), &clientSize);
@@ -27,8 +28,8 @@ class SocketClient {
         std::cerr << "client address : " << inet_ntoa(client.sin_addr)
                   << std::endl;
     }
+    //从客户端中读取一个数据包
     Encoding::Data readData() {
-        std::lock_guard<std::mutex> lock(receivedLock);
         static char buf[Encoding::Data::SplitLength];
         memset(buf, 0, sizeof(buf));
         int len = recv(cid, buf, sizeof(buf), 0);
@@ -50,6 +51,8 @@ class SocketClient {
         std::cerr << "received content : " << rec.getContent() << std::endl;
         return rec;
     }
+
+    //像客户端发送一个数据包，单线程
     void sendData(const Encoding::Data &data) {
         std::lock_guard<std::mutex> lock(sendLock);
         auto dataPack = data.splitDataPack();
@@ -58,6 +61,8 @@ class SocketClient {
             std::cerr << tag << std::endl;
         }
     }
+
+    //按照数据包组织的格式读写数据
     int workData() {
         try {
             while (true) {
@@ -72,6 +77,8 @@ class SocketClient {
             return e.geteid();
         }
     }
+
+    //测试用，无格式读写数据
     int workPlainText() {
         try {
             while (true) {
@@ -100,6 +107,7 @@ class SocketScanner {
     sockaddr_in myaddr;
 
    public:
+    //生成一个服务端对象，扫描固定的接口
     explicit SocketScanner(int _port) : port(_port) {
         memset(&myaddr, 0, sizeof(myaddr));
         socketid = 0;
@@ -109,6 +117,7 @@ class SocketScanner {
         myaddr.sin_addr.s_addr = htonl(INADDR_ANY);
     }
 
+    //发起连接
     void connect() {
         socketid = socket(AF_INET, SOCK_STREAM, 0);
         if (socketid == -1) {

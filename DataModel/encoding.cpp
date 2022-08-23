@@ -10,31 +10,27 @@ Encoding::Data::Data(int _type,
       receiverUid(_receiverUid),
       time(_time),
       content(_content) {
-    timeSize = time.length();
-    contentSize = content.length();
-    dataSize = 4 * 6 + timeSize + contentSize;
 }
 
 Encoding::Data::Data(std::string data) {
-    dataSize = decode(data.substr(0, 4));
     type = decode(data.substr(4, 4));
     senderUid = decode(data.substr(8, 4));
     receiverUid = decode(data.substr(12, 4));
-    timeSize = decode(data.substr(16, 4));
-    time = data.substr(20, timeSize);
-    contentSize = decode(data.substr(20 + timeSize, 4));
-    content = data.substr(24 + timeSize);
+    auto ptime = decodeStr(data.substr(16));
+    int timeSize = ptime.first + 4;
+    time = ptime.second;
+    auto pcontent = decodeStr(data.substr(16 + timeSize));
+    content = pcontent.second;
 }
 
 std::string Encoding::Data::encode() const {
+    int dataSize = 24 + time.length() + content.length();
     std::string data = Encoding::encode(dataSize);
     data += Encoding::encode(type);
     data += Encoding::encode(senderUid);
     data += Encoding::encode(receiverUid);
-    data += Encoding::encode(timeSize);
-    data += time;
-    data += Encoding::encode(contentSize);
-    data += content;
+    data += Encoding::encodeStr(time);
+    data += Encoding::encodeStr(content);
     return data;
 }
 

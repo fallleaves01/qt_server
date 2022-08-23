@@ -21,6 +21,17 @@ inline int decode(std::string s) {
     }
     return val;
 }
+//对于std::string的编码
+inline std::string encodeStr(std::string str) {
+    int len = str.length();
+    return encode(len) + str;
+}
+//对于std::string的解码
+inline std::pair<int, std::string> decodeStr(std::string s) {
+    int len = decode(s.substr(0, 4));
+    return std::make_pair(len, s.substr(4, len));
+}
+
 class Data {
     /*
     使用tcp发送数据包的标准格式：
@@ -34,10 +45,8 @@ class Data {
         contentSize ：  int，数据内容的长度
         content     ：  std::string，具体数据的内容
     */
-    int dataSize, type, senderUid, receiverUid, timeSize;
-    std::string time;
-    int contentSize;
-    std::string content;
+    int type, senderUid, receiverUid;
+    std::string time, content;
 
    public:
     //将数据包拆分成小段后每段的标准长度
@@ -63,6 +72,10 @@ class Data {
     int getReceiverUid() const;
     std::string getTime() const;
     std::string getContent() const;
+
+//下面是关于Data类的type的标识符
+    static const int LOGIN = 1;
+    static const int REGISTER = 2;
 };
 }  // namespace Encoding
 
