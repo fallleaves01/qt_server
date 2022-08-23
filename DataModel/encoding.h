@@ -139,6 +139,8 @@ class Data {
     static const int CREATE_GROUP_CHECK = 7;
     static const int ADD_GROUP_MESSAGE = 8;
     static const int ADD_GROUP_CHECK = 9;
+    static const int FRIEND_MESSAGE = 10;
+    static const int GROUP_MESSAGE = 11;
 };
 }  // namespace Encoding
 

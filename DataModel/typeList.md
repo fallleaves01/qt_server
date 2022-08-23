@@ -115,3 +115,18 @@
 + state         ：加群的状态，具体分为
     + AddGroupCheck::SUCCESS : 成功加入
     + AddGroupCheck::REJECT : 被拒绝
+
+
+# 消息型说明
+## 私聊消息 (FriendMessage) : 传入发送者id、接收者id、时间和信息内容
++ type          ：Data::FRIEND_MESSAGE
++ senderUid     ：发送者的Uid
++ receiverUid   ：接收者的Uid
++ time          ：添加时间
++ content       ：信息内容
+## 群聊消息 (GroupMessage) ：传入发送者id，群聊id，时间和信息内容
++ type          ：Data::GROUP_MESSAGE
++ senderUid     ：发送者的Uid
++ groupId       ：群聊的id
++ time          ：添加时间
++ content       ：消息具体内容
