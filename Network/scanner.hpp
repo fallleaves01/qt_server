@@ -7,8 +7,8 @@
 #include <future>
 #include <mutex>
 #include <vector>
-#include "worklog.hpp"
-#include "encoding.h"
+#include "../Utilities/worklog.hpp"
+#include "../DataModel/encoding.h"
 
 class SocketClient {
     int cid;

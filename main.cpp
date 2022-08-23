@@ -1,6 +1,6 @@
 #include <cstdio>
-#include "scanner.hpp"
-#include "worklog.hpp"
+#include "./Network/scanner.hpp"
+#include "./Utilities/worklog.hpp"
 
 int main() {
     const int PORT = 8180;
