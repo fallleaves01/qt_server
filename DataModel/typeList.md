@@ -88,11 +88,12 @@
     + AddFriendCheck::REJECT ：添加好友被拒绝
 
 ## 创建群聊
-### 发起方 (CreateGroupMessage) : 传入发起方的uid，添加时间和被拉进群聊的人员列表
+### 发起方 (CreateGroupMessage) : 传入发起方的uid，添加时间，群聊名称被拉进群聊的人员列表
 + type          ：Data::CREATE_GROUP_MESSAGE
 + createrUid    ：发起方的Uid
 + receiverUid   ：0，表示服务器
 + time          ：添加时间
++ groupName     ：群聊名称
 + userList      ：所有被拉入群聊的人员的Uid
 
 ### 返回 (CreateGroupCheck) : 传入群主id，群聊id和创建时间

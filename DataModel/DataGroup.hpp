@@ -4,30 +4,39 @@
 using namespace Encoding;
 
 class CreateGroupMessage : public Data {
-   public:
     std::vector<int> userList;
+    std::string groupName;
+
+   public:
     //传入发起方uid,添加时间和拉近群聊的人员列表
     explicit CreateGroupMessage(int _createrId,
-                                std::string _time,
+                                const std::string& _time,
+                                const std::string& name,
                                 std::vector<int> _memberUids)
         : Data(Data::CREATE_GROUP_MESSAGE,
                _createrId,
                0,
                _time,
-               encodeArray(_memberUids)),
-          userList(_memberUids) {}
+               encodeStr(name) + encodeArray(_memberUids)),
+          userList(_memberUids),
+          groupName(name) {}
 
     //解码函数
     explicit CreateGroupMessage(const std::string& s) : Data(s) {
-        userList = decodeArray<int>(getContent());
+        DataStream ds(getContent());
+        ds >> groupName;
+        userList = decodeArray<int>(ds.getStr());
     }
     explicit CreateGroupMessage(const Data& d) : Data(d) {
-        userList = decodeArray<int>(getContent());
+        DataStream ds(getContent());
+        ds >> groupName;
+        userList = decodeArray<int>(ds.getStr());
     }
 
     // get系列函数
     int getCreaterUid() const { return getSenderUid(); }
     std::vector<int> getUserList() const { return userList; }
+    std::string getGroupName() const { return groupName; }
 };
 
 class CreateGroupCheck : public Data {

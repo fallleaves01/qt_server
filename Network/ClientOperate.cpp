@@ -97,7 +97,7 @@ void SocketClient::tryCreateGroup(const Data &d) {
     auto gps = db->getAllGroupId();
     int groupId = gps->size() + 100000;
 
-    std::string name = "群" + std::to_string(groupId);
+    std::string name = gp.getGroupName();
     GroupInfo groupInfo(groupId, name);
     db->insertGroupTable(groupInfo);
     CreateGroupCheck ret(gp.getCreaterUid(), groupId, gp.getTime());
