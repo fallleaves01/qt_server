@@ -1,3 +1,4 @@
+#pragma once
 #ifndef ENCODING_H
 #define ENCODING_H
 
@@ -84,6 +85,19 @@ std::vector<T> decodeArray(const std::string &s) {
         T now;
         ds >> now;
         r.emplace_back(now);
+    }
+    return r;
+}
+
+template<typename T>
+std::vector<T> decodeArray(const std::string &s, T &tmp) {
+    DataStream ds(s);
+    int size = 0;
+    ds >> size;
+    std::vector<T> r;
+    for (int i = 0; i < size; i++) {
+        ds >> tmp;
+        r.emplace_back(tmp);
     }
     return r;
 }

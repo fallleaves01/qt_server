@@ -1,3 +1,4 @@
+#pragma once
 #include "encoding.h"
 #include "../DataBase/ChatMessage.h"
 #include "../DataBase/UserInfo.h"

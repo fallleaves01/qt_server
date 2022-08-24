@@ -4,16 +4,16 @@
 class ChatMessage
 {
 public:
-    explicit ChatMessage(int sender, int receiver = 0,const std::string time=" ", const std::string content = ""); // ÏÔÊ¾¹¹Ôìº¯Êı
+    explicit ChatMessage(int sender, int receiver = 0,const std::string time=" ", const std::string content = ""); // ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ìº¯ï¿½ï¿½
     int getSender() const;
     int getReceiver() const;
-    std::string getTimeStemp() const; //»ñµÃÏûÏ¢µÄÊ±¼ä´Á
+    std::string getTimeStemp() const; //ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Ê±ï¿½ï¿½ï¿½
     std::string getContent() const; //for images, store Img's baseName(with no Path)
 private:
-    int sender;     // ÁÄÌìĞÅÏ¢µÄ·¢ËÍÕß
-    int receiver;   // ÁÄÌìĞÅÏ¢µÄ½ÓÊÕÕß
-    std::string time_stemp; // ÁÄÌìĞÅÏ¢µÄ·¢ËÍÊ±¼ä
-    std::string content;    // ·¢ËÍµÄĞÅÏ¢ÄÚÈİ
+    int sender;     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½
+    int receiver;   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½
+    std::string time_stemp; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½Ä·ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+    std::string content;    // ï¿½ï¿½ï¿½Íµï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½
 
 };
 

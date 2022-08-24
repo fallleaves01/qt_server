@@ -1,3 +1,4 @@
+#pragma once
 #include "Message.hpp"
 #include "encoding.h"
 
@@ -112,10 +113,12 @@ class DGroupMessageList : public Data {
           message(_message) {}
 
     DGroupMessageList(const std::string& s) : Data(s) {
-        message = decodeArray<ChatMessage>(getContent());
+        ChatMessage tmp(0);
+        message = decodeArray<ChatMessage>(getContent(), tmp);
     }
     DGroupMessageList(const Data& d) : Data(d) {
-        message = decodeArray<ChatMessage>(getContent());
+        ChatMessage tmp(0);
+        message = decodeArray<ChatMessage>(getContent(), tmp);
     }
 
     std::vector<ChatMessage> getMessageList() const { return message; }

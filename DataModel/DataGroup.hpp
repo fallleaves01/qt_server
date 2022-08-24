@@ -1,3 +1,4 @@
+#pragma once
 #include "encoding.h"
 using namespace Encoding;
 
