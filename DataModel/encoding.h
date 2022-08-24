@@ -169,6 +169,7 @@ class Data {
     static const int GROUP_USER = 23;
     static const int GET_GROUP_MESSAGE = 24;
     static const int GROUP_MESSAGE_LIST = 25;
+    static const int GROUP_INVITE_MESSAGE = 26;
 };
 }  // namespace Encoding
 

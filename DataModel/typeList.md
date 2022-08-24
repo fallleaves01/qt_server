@@ -5,6 +5,7 @@
 + [添加好友](#添加好友)
 + 创建群聊
 + 加入群聊
++ 邀请进入群聊
 
 ## 消息型
 + 私聊消息
@@ -108,15 +109,31 @@
 + time          ：添加时间
 + content       ：加群的备注信息
 
-### 返回 (AddGroupCheck) : 传入加群信息和状态
+### 返回 (AddGroupCheck) : 传入加群信息和状态/传入加群者id，群聊id，加群时间和状态
 + type          ：Data::ADD_GROUP_CHECK
-+ createrUid    ：加群方的Uid
-+ receiverUid   ：群聊的id
++ userId    ：加群方的Uid
++ groupId   ：群聊的id
 + time          ：添加时间
 + state         ：加群的状态，具体分为
     + AddGroupCheck::SUCCESS : 成功加入
     + AddGroupCheck::REJECT : 被拒绝
 
+## 邀请进入群聊
+### 发起方 (GroupInviteMessage) : 传入邀请者的uid，被邀请者的uid，添加时间和群聊信息
++ type          ：Data::GROUP_INVITE_MESSAGE
++ senderUid     ：邀请者的Uid
++ receiverUid   ：被邀请者的uid
++ time          ：添加时间
++ groupInfo     ：群聊的GroupInfo信息
+
+### 返回 (AddGroupCheck) : 传入加群信息和状态
++ type          ：Data::ADD_GROUP_CHECK
++ userId    ：加群方的Uid
++ groupId   ：群聊的id
++ time          ：添加时间
++ state         ：加群的状态，具体分为
+    + AddGroupCheck::SUCCESS : 成功加入
+    + AddGroupCheck::REJECT : 被拒绝
 
 # 消息型说明
 ## 私聊消息 (DFriendMessage) : 传入发送者id、接收者id、时间和信息内容或直接传入ChatMessage类

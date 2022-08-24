@@ -37,8 +37,24 @@ class SocketClient {
 
     //以下是操作列表
     void workOnData(const Data&);
+
+    //判断缓存操作
+    bool checkOnline(int);
+    void loginWithUid(int);
+    void sendDataToUid(int, const Data&);
+
+    //功能型操作
     void tryLogin(const Data&);
     void tryRegister(const Data&);
+    void tryAddFriend(const Data&);
+    void addFriendCheck(const Data&);
+    void tryCreateGroup(const Data&);
+    void tryAddGroup(const Data&);
+    void addGroupCheck(const Data&);
+    void tryInviteGroup(const Data&);
+
+    //消息型操作
+    //请求型操作
 };
 
 class SocketScanner {

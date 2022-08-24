@@ -130,6 +130,7 @@
     <ClInclude Include="ChatMessage.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="GroupInfo.h" />
+    <ClInclude Include="Msg.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="sqlite3ext.h" />
     <ClInclude Include="UserInfo.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="Database.cpp" />
     <ClCompile Include="GroupInfo.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Msg.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="UserInfo.cpp" />
   </ItemGroup>

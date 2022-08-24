@@ -1,5 +1,6 @@
 #pragma once
 #include "encoding.h"
+#include "Message.hpp"
 using namespace Encoding;
 
 class CreateGroupMessage : public Data {
@@ -20,7 +21,7 @@ class CreateGroupMessage : public Data {
     explicit CreateGroupMessage(const std::string& s) : Data(s) {
         userList = decodeArray<int>(getContent());
     }
-    explicit CreateGroupMessage(Data& d) : Data(d) {
+    explicit CreateGroupMessage(const Data& d) : Data(d) {
         userList = decodeArray<int>(getContent());
     }
 
@@ -73,6 +74,18 @@ class AddGroupCheck : public Data {
                encodeInt(_state)),
           state(_state) {}
 
+    //传入加群者id，群聊id，时间和状态
+    explicit AddGroupCheck(int _userId,
+                           int _groupId,
+                           const std::string& _time,
+                           int _state)
+        : Data(Data::ADD_GROUP_CHECK,
+               _userId,
+               _groupId,
+               _time,
+               encodeInt(_state)),
+          state(_state) {}
+
     explicit AddGroupCheck(const std::string& s) : Data(s) {
         state = decodeInt(getContent());
     }
@@ -86,4 +99,31 @@ class AddGroupCheck : public Data {
 
     static const int REJECT = 0;
     static const int SUCCESS = 1;
+};
+
+class GroupInviteMessage : public Data {
+    GroupInfo groupInfo;
+
+   public:
+    GroupInviteMessage(int _senderUid,
+                       int _receiverUid,
+                       const std::string& _time,
+                       GroupInfo _info)
+        : Data(Data::GROUP_INVITE_MESSAGE,
+               _senderUid,
+               _receiverUid,
+               _time,
+               encodeGroupInfo(_info)),
+          groupInfo(_info) {}
+
+    GroupInviteMessage(const std::string& s) : Data(s) {
+        DataStream ds(getContent());
+        ds >> groupInfo;
+    }
+    GroupInviteMessage(const Data& d) : Data(d) {
+        DataStream ds(getContent());
+        ds >> groupInfo;
+    }
+
+    GroupInfo getGroupInfo() const { return groupInfo; }
 };

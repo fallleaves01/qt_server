@@ -81,6 +81,12 @@ inline DataStream &operator>>(DataStream &ds, GroupInfo &info) {
     return ds;
 }
 
+inline std::string encodeGroupInfo(const GroupInfo &info) {
+    DataStream ds("");
+    ds << info;
+    return ds.getStr();
+}
+
 inline DataStream &operator<<(DataStream &ds, const ChatMessage &message) {
     ds << message.getSender();
     ds << message.getReceiver();

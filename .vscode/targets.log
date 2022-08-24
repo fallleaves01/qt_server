@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Aug 24 11:44:32 2022
+# Make data base, printed on Wed Aug 24 17:13:03 2022
 
 # Variables
 
@@ -149,9 +149,9 @@ WSL_DISTRO_NAME = Ubuntu
 
 # Directories
 
-# . (device 2064, inode 10652): 19 files, no impossibilities.
+# . (device 2064, inode 10652): 11 files, no impossibilities.
 
-# 19 files, no impossibilities in 1 directories.
+# 11 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -175,7 +175,7 @@ clear:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 32):
+#  recipe to execute (from 'makefile', line 35):
 	rm *.o main
 
 # Not a target:
@@ -204,12 +204,12 @@ ChatMessage.o: DataBase/ChatMessage.cpp DataBase/ChatMessage.h
 #  recipe to execute (from 'makefile', line 20):
 	g++ -c ./DataBase/ChatMessage.cpp
 
-debug: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o Network/scanner.h Utilities/worklog.hpp
+debug: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o Network/scanner.h Utilities/worklog.hpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 5):
-	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o -l pthread -l sqlite3 -Wall -std=c++17 -g
+	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o -l pthread -l sqlite3 -Wall -std=c++17 -g
 
 # Not a target:
 Network/ClientOperate.cpp:
@@ -226,12 +226,18 @@ DataBase/UserInfo.h:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-24 11:44:20.997602156
+#  Last modified 2022-08-24 17:13:00.497421994
 #  File has been updated.
 #  Successfully updated.
 
 # Not a target:
 Network/SocketScanner.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
+# Not a target:
+Network/ClientLogin.cpp:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
@@ -269,11 +275,18 @@ SocketScanner.o: Network/SocketScanner.cpp Network/scanner.h
 #  recipe to execute (from 'makefile', line 26):
 	g++ -c ./Network/SocketScanner.cpp
 
-# Not a target:
-.DEFAULT:
+ClientLogin.o: Network/ClientLogin.cpp Network/scanner.h
 #  Implicit rule search has not been done.
 #  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 32):
+	g++ -c ./Network/ClientLogin.cpp
+
+# Not a target:
+.DEFAULT:
  
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
 
 UserInfo.o: DataBase/UserInfo.cpp DataBase/UserInfo.h
@@ -296,12 +309,12 @@ SocketClient.o: Network/SocketClient.cpp Network/scanner.h
 #  recipe to execute (from 'makefile', line 23):
 	g++ -c ./Network/SocketClient.cpp
 
-main: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o Network/scanner.h Utilities/worklog.hpp
+main: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o Network/scanner.h Utilities/worklog.hpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 2):
-	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o -l pthread -l sqlite3 -Wall -std=c++17
+	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o -l pthread -l sqlite3 -Wall -std=c++17
 
 # Not a target:
 DataBase/ChatMessage.h:
@@ -354,19 +367,19 @@ DataBase/GroupInfo.h:
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=31/1024=3%, Rehash=0, Collisions=0/87=0%
+# Load=33/1024=3%, Rehash=0, Collisions=0/94=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 41 / storage = 588 B / avg = 14 B
-# current buf: size = 8162 B / used = 588 B / count = 41 / avg = 14 B
+# strcache buffers: 1 (0) / strings = 44 / storage = 638 B / avg = 14 B
+# current buf: size = 8162 B / used = 638 B / count = 44 / avg = 14 B
 
-# strcache performance: lookups = 88 / hit rate = 53%
+# strcache performance: lookups = 86 / hit rate = 48%
 # hash-table stats:
-# Load=41/8192=1%, Rehash=0, Collisions=1/88=1%
-# Finished Make data base on Wed Aug 24 11:44:32 2022
+# Load=44/8192=1%, Rehash=0, Collisions=1/86=1%
+# Finished Make data base on Wed Aug 24 17:13:03 2022
 
  

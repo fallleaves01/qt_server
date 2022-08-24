@@ -4,7 +4,7 @@
 # include "UserInfo.h"
 # include "GroupInfo.h"
 # include <iostream>
-# include "ChatMessage.h"
+# include "Msg.h"
 # include <vector>
 class Database
 {
@@ -17,31 +17,39 @@ public:
 	void insertUserTable(UserInfo user);
 	void insertGroupTable(GroupInfo group);
 	void insertChatMsgTable(ChatMessage  msg);
+	void insertOfflineMsg(Msg msg);
 	void insertFriendShipTable(int userId1,int userId2);
 	void insertGroupShipTable(int groupid,int userId, int permission=2); // 0为群主 1为管理员 2 为普通成员
 	// 查找操作
 
 	// 得到id 类型
-	std::vector<int>* getAllUserId();       // 得到所有用户的 id
-	std::vector<int>* getAllGroupId();      // 得到所有群聊的 id
-	std::vector<int>* getFriendsId(int userId);  // 得到 所有朋友的 id
+	std::vector<int>* getAllUserId();                 // 得到所有用户的 id
+	std::vector<int>* getAllGroupId();                // 得到所有群聊的 id
+	std::vector<int>* getFriendsId(int userId);       // 得到 所有朋友的 id
 	std::vector<int>* getGroupMembersId(int groupId); // 得到群聊成员的 id
 	std::vector<int>* getGroupListId(int userId);     // 得到用户所加群的 id
+
 	// 得到具体的类型
-	UserInfo getUserInfo(int userId);       // 带密码的
-	UserInfo getUserInfoNoPwd(int userId);  // 不带密码的
-	GroupInfo getGroupInfo(int groupId);    // 得到group 信息
+	UserInfo getUserInfoById(int userId);              // 带密码的
+	UserInfo getUserInfoByIdNoPwd(int userId);         // 不带密码的
+	GroupInfo getGroupInfo(int groupId);               // 得到group 信息
+	UserInfo getUserInfoByNameNoPwd(std::string name); // 根据名字查找 不带密码
 
 	int getUserPermission(int userId, int groupId);                // 得到用户在群聊中的权限
+
 	// 得到的聊天记录按时间的先后进行排序，坐标小的时间近
 	std::vector<ChatMessage>* getUserChatMessage(int Id1,int Id2); // 得到两个用户的聊天记录
+	// (id1 为发送者 Id2 为接收者) 我们需要得到Id1 发送给 Id2 的离线聊天记录
+	std::vector<Msg>* getOfflineChatMessage(int _sender, int _receiver); // 得到两个用户的离线消息
+	
 	std::vector<ChatMessage>* getGroupChatMessage(int groupId);    // 得到群聊的聊天记录
-	std::vector<UserInfo>* getUserFriends(int userId);             // 得到用户的朋友信息 id+name
-	std::vector<UserInfo>* getGroupMembersNoPwd(int groupId);      // 得到群聊成员的信息 id+name
+	std::vector<UserInfo>* getUserFriendsNoPwd(int userId);        // 得到用户的朋友信息 id+name
+	std::vector<UserInfo>* getGroupMembersNoPwd(int groupId);      // 得到群聊成员的信息 id+name+permission(密码)
 	std::vector<GroupInfo>* getGroupList(int userId);              // 得到用户所加群的信息 id+name
 	std::vector<UserInfo>* getAllUserNoPwd();                      // 得到所有用户的信息 id+name
 	std::vector<GroupInfo>* getAllGroup();                         // 得到全部的群信息 id+name
 
+		
 	// 更新操作
 	
 	void changeUserName(int userId,std::string newName);      // 更改用户名字
@@ -55,7 +63,7 @@ public:
 	void delUserFriend(int userId1, int userId2);             // 删除好友关系
 	void delGroupShip(int userId, int groupId);               // 删除群聊关系
 	void delGroup(int groupId);                               // 注销群聊
-
+	void delOfflineMsg(int _sender, int _receiver);           // 删除离线信息
 private:
 	void initDB();
 	class DelClass
@@ -82,5 +90,6 @@ private:
 	void createChatMsgTable();
 	void createFeiendShipTable();
 	void createGroupShipTable();
+	void createChatMsgOffline();  // 离线信息表
 };
 

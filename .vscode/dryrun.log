@@ -1,5 +1,14 @@
 make --dry-run --keep-going --print-directory
 make: Entering directory '/home/fallleaves01/project/qt/server'
-make: 'main' is up to date.
+g++ -c ./DataModel/encoding.cpp
+g++ -c ./DataBase/Database.cpp
+g++ -c ./DataBase/GroupInfo.cpp
+g++ -c ./DataBase/UserInfo.cpp
+g++ -c ./DataBase/ChatMessage.cpp
+g++ -c ./Network/SocketClient.cpp
+g++ -c ./Network/SocketScanner.cpp
+g++ -c ./Network/ClientOperate.cpp
+g++ -c ./Network/ClientLogin.cpp
+g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o -l pthread -l sqlite3 -Wall -std=c++17
 make: Leaving directory '/home/fallleaves01/project/qt/server'
  
