@@ -119,13 +119,13 @@
 
 
 # 消息型说明
-## 私聊消息 (FriendMessage) : 传入发送者id、接收者id、时间和信息内容
+## 私聊消息 (DFriendMessage) : 传入发送者id、接收者id、时间和信息内容或直接传入ChatMessage类
 + type          ：Data::FRIEND_MESSAGE
 + senderUid     ：发送者的Uid
 + receiverUid   ：接收者的Uid
 + time          ：添加时间
 + content       ：信息内容
-## 群聊消息 (GroupMessage) ：传入发送者id，群聊id，时间和信息内容
+## 群聊消息 (DGroupMessage) ：传入发送者id，群聊id，时间和信息内容或直接传入ChatMessage类
 + type          ：Data::GROUP_MESSAGE
 + senderUid     ：发送者的Uid
 + groupId       ：群聊的id
@@ -140,10 +140,9 @@
 + receiverUid   ：目标用户的Uid
 + time          ：时间
 
-### 返回 (UserInfo): 传入用户uid，用户名，在线状态
+### 返回 (DUserInfo): 传入用户uid，用户名，在线状态
 + type          ：Data::USER_INFO
-+ userId        ：目标用户的Uid
-+ userName      ：目标用户的名字
++ userInfo      ：目标用户的UserInfo
 + onlineTag     ：目标用户的在线状态
 
 ## 获取好友列表
@@ -157,13 +156,26 @@
 + userId        ：目标用户的Uid
 + friendList    ：目标用户的好友的uid数组
 
+## 获取聊天记录
+### 请求方 (GetFriendMessage): 传入请求者uid，目标好友uid和时间
++ type          ：Data::GET_FRIEND_MESSAGE
++ senderUid     ：请求者的Uid
++ friendId      ：目标好友的Uid
++ time          ：时间
+
+### 返回 (FriendMessageList): 传入请求者uid，好友uid和消息列表
++ type          ：Data::FRIEND_MESSAGE
++ senderUid     ：请求者的Uid
++ friendUid     ：目标好友的Uid
++ messageList   ：目标好友的FriendMessage数组
+
 ## 获取群聊信息
 ### 请求方 (GetGroupInfo): 传入请求者uid，目标群聊uid和时间
 + type          ：Data::GET_GROUP_INFO
 + senderUid     ：请求者的Uid
 + groupId       ：目标群聊的Uid
 + time          ：时间
-### 返回 (GroupInfo): 传入群聊id，群聊名称，人数
+### 返回 (DGroupInfo): 传入群聊id，群聊名称，人数
 + type          ：Data::GROUP_INFO
 + groupId       ：目标群聊的Uid
 + groupName     ：目标群聊的名字
@@ -178,7 +190,7 @@
 ### 返回 (GroupList): 传入用户uid，时间，群聊列表
 + type          ：Data::GROUP_LIST
 + userId        ：目标用户的Uid
-+ groupList     ：目标用户的群聊的id数组
++ groupList     ：目标用户的群聊的GroupInfo数组
 
 ## 获取群聊成员
 ### 请求方 (GetGroupUser): 传入请求者uid，目标群聊uid和时间
@@ -190,6 +202,17 @@
 ### 返回 (GroupUser): 传入群聊id，时间，成员列表
 + type          ：Data::GROUP_USER
 + groupId       ：目标群聊的Id
-+ userList      ：目标群聊的成员id数组
++ userList      ：目标群聊的成员UserInfo数组
 
-## 获取聊天记录
+## 获取群聊记录
+### 请求方 (GetGroupMessage): 传入请求者uid，目标群聊uid和时间
++ type          ：Data::GET_GROUP_MESSAGE
++ senderUid     ：请求者的Uid
++ receiverUid   ：目标群聊的Uid
++ time          ：时间
+
+### 返回 (GroupMessageList): 传入请求者id，群聊id和消息列表
++ type          ：Data::GROUP_MESSAGE
++ senderUid     ：请求者的Uid
++ groupId       ：目标群聊的Id
++ messageList   ：目标群聊的GroupMessage数组

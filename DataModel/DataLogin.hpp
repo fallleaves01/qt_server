@@ -70,7 +70,7 @@ class LoginCheck : public Data {
     int getState() const { return state; }
 };
 
-class RegisterMessage : Data {
+class RegisterMessage : public Data {
     std::string userName, password;
 
    public:
