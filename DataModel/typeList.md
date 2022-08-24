@@ -94,7 +94,7 @@
 + time          ：添加时间
 + userList      ：所有被拉入群聊的人员的Uid
 
-### 返回 (CreateGroupCheck)
+### 返回 (CreateGroupCheck) : 传入群主id，群聊id和创建时间
 + type          ：Data::CREATE_GROUP_CHECK
 + createrUid    ：发起方的Uid
 + groupId       ：被创建出的群聊的Id
