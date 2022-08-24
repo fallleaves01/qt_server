@@ -1,9 +1,8 @@
-main: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ./ChatMessage.o ./Network/scanner.hpp ./Utilities/worklog.hpp
-	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o -l pthread -l sqlite3 -Wall -std=c++17
+main: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ./Network/scanner.h ./Utilities/worklog.hpp
+	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o -l pthread -l sqlite3 -Wall -std=c++17
 
-debug: main.cpp encoding.o ./Network/scanner.hpp ./Utilities/worklog.hpp
-	g++ -o main main.cpp encoding.o -lpthread -Wall -std=c++17 -g
-
+debug: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ./Network/scanner.h ./Utilities/worklog.hpp
+	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o -l pthread -l sqlite3 -Wall -std=c++17 -g
 
 encoding.o: ./DataModel/encoding.cpp ./DataModel/encoding.h
 	g++ -c ./DataModel/encoding.cpp
@@ -19,6 +18,15 @@ UserInfo.o: ./DataBase/UserInfo.cpp ./DataBase/UserInfo.h
 
 ChatMessage.o: ./DataBase/ChatMessage.cpp ./DataBase/ChatMessage.h
 	g++ -c ./DataBase/ChatMessage.cpp
+
+SocketClient.o: ./Network/SocketClient.cpp ./Network/scanner.h
+	g++ -c ./Network/SocketClient.cpp
+
+SocketScanner.o: ./Network/SocketScanner.cpp ./Network/scanner.h
+	g++ -c ./Network/SocketScanner.cpp
+
+ClientOperate.o: ./Network/ClientOperate.cpp ./Network/scanner.h
+	g++ -c ./Network/ClientOperate.cpp
 
 clear:
 	rm *.o main

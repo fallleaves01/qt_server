@@ -38,9 +38,9 @@
 + time          ：登录时间
 + userName      ：用户名
 + state         ：登录状态，具体分为
-    + DataLogin::SUCCESS ：成功登录
-    + DataLogin::USERNOTFOUND ：找不到对应用户
-    + DataLogin::WRONGPASSWORD ：密码错误
+    + LoginCheck::SUCCESS ：成功登录
+    + LoginCheck::USERNOTFOUND ：找不到对应用户
+    + LoginCheck::WRONGPASSWORD ：密码错误
 
 ## 注册
 ### 发起方 (RegisterMessage) : 传入三个字符串：时间、用户名和密码

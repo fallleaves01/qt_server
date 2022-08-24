@@ -1,5 +1,5 @@
 #include <cstdio>
-#include "./Network/scanner.hpp"
+#include "./Network/scanner.h"
 #include "./Utilities/worklog.hpp"
 
 int main() {
