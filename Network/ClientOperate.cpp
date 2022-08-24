@@ -26,6 +26,12 @@ void SocketClient::workOnData(const Data &d) {
         case (Data::GROUP_INVITE_MESSAGE):
             tryInviteGroup(d);
             break;
+        case (Data::DFRIEND_MESSAGE):
+            sendFriendMessage(d);
+            break;
+        case (Data::DGROUP_MESSAGE):
+            sendGroupMessage(d);
+            break;
     }
 }
 

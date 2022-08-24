@@ -8,7 +8,7 @@ class CreateGroupMessage : public Data {
     std::string groupName;
 
    public:
-    //传入发起方uid,添加时间和拉近群聊的人员列表
+    //传入发起方uid,添加时间,群聊名称和拉进群聊的人员列表
     explicit CreateGroupMessage(int _createrId,
                                 const std::string& _time,
                                 const std::string& name,

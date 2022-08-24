@@ -54,6 +54,8 @@ class SocketClient {
     void tryInviteGroup(const Data&);
 
     //消息型操作
+    void sendFriendMessage(const Data&);
+    void sendGroupMessage(const Data&);
     //请求型操作
 };
 

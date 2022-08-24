@@ -12,14 +12,14 @@ class DFriendMessage : public Data {
                    int _receiverUid,
                    const std::string& _time,
                    const std::string& _content)
-        : Data(Data::FRIEND_MESSAGE,
+        : Data(Data::DFRIEND_MESSAGE,
                _senderUid,
                _receiverUid,
                _time,
                _content) {}
     //传入ChatMessage类
     DFriendMessage(const ChatMessage& message)
-        : Data(Data::FRIEND_MESSAGE,
+        : Data(Data::DFRIEND_MESSAGE,
                message.getSender(),
                message.getReceiver(),
                message.getTimeStemp(),
@@ -36,14 +36,14 @@ class DGroupMessage : public Data {
                   int _groupId,
                   const std::string& _time,
                   const std::string& _content)
-        : Data(Data::FRIEND_MESSAGE,
+        : Data(Data::DGROUP_MESSAGE,
                _senderUid,
                _groupId,
                _time,
                _content) {}
     //传入ChatMessage类
     DGroupMessage(const ChatMessage& message)
-        : Data(Data::FRIEND_MESSAGE,
+        : Data(Data::DGROUP_MESSAGE,
                message.getSender(),
                message.getReceiver(),
                message.getTimeStemp(),

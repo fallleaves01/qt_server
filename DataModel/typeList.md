@@ -138,13 +138,13 @@
 
 # 消息型说明
 ## 私聊消息 (DFriendMessage) : 传入发送者id、接收者id、时间和信息内容或直接传入ChatMessage类
-+ type          ：Data::FRIEND_MESSAGE
++ type          ：Data::DFRIEND_MESSAGE
 + senderUid     ：发送者的Uid
 + receiverUid   ：接收者的Uid
 + time          ：添加时间
 + content       ：信息内容
 ## 群聊消息 (DGroupMessage) ：传入发送者id，群聊id，时间和信息内容或直接传入ChatMessage类
-+ type          ：Data::GROUP_MESSAGE
++ type          ：Data::DGROUP_MESSAGE
 + senderUid     ：发送者的Uid
 + groupId       ：群聊的id
 + time          ：添加时间

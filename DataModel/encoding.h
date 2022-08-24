@@ -153,8 +153,8 @@ class Data {
     static const int CREATE_GROUP_CHECK = 7;
     static const int ADD_GROUP_MESSAGE = 8;
     static const int ADD_GROUP_CHECK = 9;
-    static const int FRIEND_MESSAGE = 10;
-    static const int GROUP_MESSAGE = 11;
+    static const int DFRIEND_MESSAGE = 10;
+    static const int DGROUP_MESSAGE = 11;
     static const int GET_USER_INFO = 12;
     static const int USER_INFO = 13;
     static const int GET_FRIEND_LIST = 14;
