@@ -21,8 +21,10 @@ class SocketClient {
     static std::map<int, SocketClient*>& userClient();
 
    public:
+    void operator=(const SocketClient &);
     //对应一个连接到的客户端生成一个客户端对象
     explicit SocketClient(int socketid);
+    SocketClient();
     //从客户端中读取一个数据包
     Encoding::Data readData();
 

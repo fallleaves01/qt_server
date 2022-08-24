@@ -2,6 +2,7 @@
 
 void SocketClient::getUserInfo(const Data &d) {
     GetUserInfo get(d);
+    std::cerr << "get user info " << get.getUserId() << std::endl;
     auto db = Database::getDatabase();
     UserInfo info = db->getUserInfoById(get.getUserId());
     bool online = checkOnline(get.getUserId());

@@ -24,9 +24,11 @@ void SocketScanner::connect() {
 }
 void SocketScanner::work() {
     std::vector<std::future<int>> fpool;
+    static SocketClient vec[100];
+    int cnt = 0;
     while (true) {
-        SocketClient client(socketid);
+        vec[++cnt] = SocketClient(socketid);
         fpool.emplace_back(std::async(
-            std::launch::async, [&client]() { return client.workData(); }));
+            std::launch::async, [&]() { return vec[cnt].workData(); }));
     }
 }

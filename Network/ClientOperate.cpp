@@ -94,25 +94,30 @@ void SocketClient::tryRegister(const Data &d) {
     std::cerr << "user " << reg.getUserName() << " tried to register" << std::endl;
     auto db = Database::getDatabase();
     auto users = db->getAllUserId();
-    int uid = users->size() + 1;
+    int uid = users->size() + 100;
     UserInfo user(uid, reg.getUserName(), reg.getPassword());
     delete users;
     db->insertUserTable(user);
     LoginCheck ret(reg.getTime(), user.getName(), user.getId(), LoginCheck::SUCCESS);
+    std::cerr << "new user with uid " << user.getId() << std::endl;
     sendData(ret);
     loginWithUid(user.getId());
 }
 
 void SocketClient::tryAddFriend(const Data &d) {
     AddFriendMessage addf(d);
+    std::cerr << "send add friend message to " << addf.getReceiverUid() << std::endl;
     sendDataToUid(addf.getReceiverUid(), addf);
+    std::cerr << "try add friend " << addf.getSenderUid() << ' ' << addf.getReceiverUid() << std::endl;
 }
 
 void SocketClient::addFriendCheck(const Data &d) {
     AddFriendCheck addfc(d);
+    std::cerr << "return add friend result " << addfc.getSenderUid() << ' ' << addfc.getReceiverUid() << std::endl;
     if (addfc.getState() == AddFriendCheck::SUCCESS) {
         auto db = Database::getDatabase();
         db->insertFriendShipTable(addfc.getSenderUid(), addfc.getReceiverUid());
+        std::cerr << "add friendship " << addfc.getSenderUid() << " and " << addfc.getReceiverUid() << std::endl;
     }
     sendDataToUid(addfc.getSenderUid(), addfc);
 }

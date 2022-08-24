@@ -10,6 +10,12 @@ SocketClient::SocketClient(int socketid) : clientSize(sizeof(client)) {
     std::cerr << "get client" << std::endl;
     std::cerr << "client address : " << inet_ntoa(client.sin_addr) << std::endl;
 }
+SocketClient::SocketClient() {}
+void SocketClient::operator=(const SocketClient &b) {
+    cid = b.cid, userUid = b.userUid;
+    client = b.client;
+    clientSize = b.clientSize;
+}
 
 //从客户端中读取一个数据包
 Encoding::Data SocketClient::readData() {
