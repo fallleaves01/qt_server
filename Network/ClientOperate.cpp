@@ -32,6 +32,27 @@ void SocketClient::workOnData(const Data &d) {
         case (Data::DGROUP_MESSAGE):
             sendGroupMessage(d);
             break;
+        case (Data::GET_USER_INFO):
+            getUserInfo(d);
+            break;
+        case (Data::GET_FRIEND_LIST):
+            getFriendList(d);
+            break;
+        case (Data::GET_FRIEND_MESSAGE):
+            getFriendMessage(d);
+            break;
+        case (Data::GET_GROUP_INFO):
+            getGroupInfo(d);
+            break;
+        case (Data::GET_GROUP_LIST):
+            getGroupList(d);
+            break;
+        case (Data::GET_GROUP_USER):
+            getGroupUser(d);
+            break;
+        case (Data::GET_GROUP_MESSAGE):
+            getGroupMessage(d);
+            break;
     }
 }
 

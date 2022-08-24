@@ -10,6 +10,8 @@ g++ -c ./Network/SocketScanner.cpp
 g++ -c ./Network/ClientOperate.cpp
 g++ -c ./Network/ClientLogin.cpp
 g++ -c ./Network/ClientMessage.cpp
-g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o -l pthread -l sqlite3 -Wall -std=c++17
+ 
+g++ -c ./Network/ClientRequest.cpp
+g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o ClientRequest.o -l pthread -l sqlite3 -Wall -std=c++17
 make: Leaving directory '/home/fallleaves01/project/qt/server'
  

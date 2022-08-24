@@ -14,16 +14,22 @@ class GetGroupInfo : public Data {
 };
 
 class DGroupInfo : public Data {
+    GroupInfo groupInfo;
    public:
-    DGroupInfo(int _groupId, const std::string& _groupName, int groupCnt)
-        : Data(Data::GROUP_INFO, _groupId, groupCnt, "", _groupName) {}
+    DGroupInfo(int _senderUid, const GroupInfo &_groupInfo, int groupCnt)
+        : Data(Data::GROUP_INFO, _senderUid, groupCnt, "", encodeGroupInfo(_groupInfo)) {}
 
-    DGroupInfo(const std::string& s) : Data(s) {}
-    DGroupInfo(const Data& d) : Data(d) {}
+    DGroupInfo(const std::string& s) : Data(s) {
+        DataStream ds(getContent());
+        ds >> groupInfo;
+    }
+    DGroupInfo(const Data& d) : Data(d) {
+        DataStream ds(getContent());
+        ds >> groupInfo;
+    }
 
-    int getGroupId() const { return getSenderUid(); }
     int getGroupCnt() const { return getReceiverUid(); }
-    std::string getGroupName() const { return getContent(); }
+    GroupInfo getGroupInfo() const { return groupInfo; }
 };
 
 class GetGroupList : public Data {
@@ -67,13 +73,12 @@ class DGroupUser : public Data {
     std::vector<UserInfo> userList;
 
    public:
-    DGroupUser(int _groupId,
-               const std::string& _time,
+    DGroupUser(int _senderUid, int _groupId,
                const std::vector<UserInfo>& _userList)
         : Data(Data::GET_GROUP_USER,
+                _senderUid,
                _groupId,
-               0,
-               _time,
+               "",
                encodeArray(_userList)) {}
 
     DGroupUser(const std::string& s) : Data(s) {
@@ -83,7 +88,7 @@ class DGroupUser : public Data {
         userList = decodeArray<UserInfo>(getContent());
     }
 
-    int getGroupId() const { return getSenderUid(); }
+    int getGroupId() const { return getReceiverUid(); }
     std::vector<UserInfo> getUserList() const { return userList; }
 };
 

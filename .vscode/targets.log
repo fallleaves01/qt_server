@@ -8,7 +8,7 @@ make: *** No rule to make target 'all'.  Stop.
 # This is free software: you are free to change and redistribute it.
 # There is NO WARRANTY, to the extent permitted by law.
 
-# Make data base, printed on Wed Aug 24 18:03:49 2022
+# Make data base, printed on Wed Aug 24 18:58:39 2022
 
 # Variables
 
@@ -175,8 +175,15 @@ clear:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  recipe to execute (from 'makefile', line 35):
+#  recipe to execute (from 'makefile', line 38):
 	rm *.o main
+
+ClientRequest.o: Network/ClientRequest.cpp Network/scanner.h
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+#  recipe to execute (from 'makefile', line 35):
+	g++ -c ./Network/ClientRequest.cpp
 
 # Not a target:
 all:
@@ -219,7 +226,7 @@ DataBase/UserInfo.h:
 # Not a target:
 makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-08-24 18:03:42.6473942
+#  Last modified 2022-08-24 18:58:32.697364141
 #  File has been updated.
 #  Successfully updated.
 
@@ -266,6 +273,7 @@ SocketScanner.o: Network/SocketScanner.cpp Network/scanner.h
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 23):
+ 
 	g++ -c ./Network/SocketScanner.cpp
 
 ClientLogin.o: Network/ClientLogin.cpp Network/scanner.h
@@ -302,7 +310,6 @@ Network/SocketClient.cpp:
 
 ClientMessage.o: Network/ClientMessage.cpp Network/scanner.h
 #  Implicit rule search has not been done.
- 
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 32):
@@ -315,12 +322,12 @@ SocketClient.o: Network/SocketClient.cpp Network/scanner.h
 #  recipe to execute (from 'makefile', line 20):
 	g++ -c ./Network/SocketClient.cpp
 
-main: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o Network/scanner.h Utilities/worklog.hpp
+main: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o ClientRequest.o Network/scanner.h Utilities/worklog.hpp
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
 #  recipe to execute (from 'makefile', line 2):
-	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o -l pthread -l sqlite3 -Wall -std=c++17
+	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o ClientRequest.o -l pthread -l sqlite3 -Wall -std=c++17
 
 # Not a target:
 DataBase/ChatMessage.h:
@@ -372,20 +379,26 @@ DataBase/GroupInfo.h:
 #  Modification time never checked.
 #  File has not been updated.
 
+# Not a target:
+Network/ClientRequest.cpp:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
+#  File has not been updated.
+
 # files hash-table stats:
-# Load=34/1024=3%, Rehash=0, Collisions=0/87=0%
+# Load=36/1024=4%, Rehash=0, Collisions=0/93=0%
 # VPATH Search Paths
 
 # No 'vpath' search paths.
 
 # No general ('VPATH' variable) search path.
 
-# strcache buffers: 1 (0) / strings = 45 / storage = 674 B / avg = 14 B
-# current buf: size = 8162 B / used = 674 B / count = 45 / avg = 14 B
+# strcache buffers: 1 (0) / strings = 47 / storage = 716 B / avg = 15 B
+# current buf: size = 8162 B / used = 716 B / count = 47 / avg = 15 B
 
-# strcache performance: lookups = 77 / hit rate = 41%
+# strcache performance: lookups = 82 / hit rate = 42%
 # hash-table stats:
-# Load=45/8192=1%, Rehash=0, Collisions=1/77=1%
-# Finished Make data base on Wed Aug 24 18:03:49 2022
+# Load=47/8192=1%, Rehash=0, Collisions=1/82=1%
+# Finished Make data base on Wed Aug 24 18:58:39 2022
 
  

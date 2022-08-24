@@ -158,8 +158,9 @@
 + userId        ：目标用户的Uid
 + time          ：时间
 
-### 返回 (DUserInfo): 传入用户UserInfo，在线状态
+### 返回 (DUserInfo): 传入请求者uid，用户UserInfo，在线状态
 + type          ：Data::USER_INFO
++ senderUid     ：请求者的Uid
 + userInfo      ：目标用户的UserInfo
 + onlineState   ：目标用户的在线状态，分为：
     + DUserInfo::ONLINE：在线
@@ -171,10 +172,11 @@
 + senderUid     ：请求者的Uid
 + time          ：时间
 
-### 返回 (DFriendList): 传入用户uid，好友列表
+### 返回 (DFriendList): 传入请求者uid，用户uid，好友列表
 + type          ：Data::FRIEND_LIST
++ senderUid     ：请求者的Uid
 + userId        ：目标用户的Uid
-+ friendList    ：目标用户的好友的uid数组
++ friendList    ：目标用户的好友的UserInfo数组
 
 ## 获取聊天记录
 ### 请求方 (GetFriendMessage): 传入请求者uid，目标好友uid和时间
@@ -195,11 +197,11 @@
 + senderUid     ：请求者的Uid
 + groupId       ：目标群聊的Uid
 + time          ：时间
-### 返回 (DGroupInfo): 传入群聊id，群聊名称，人数
+### 返回 (DGroupInfo): 传入请求者uid，群聊GroupInfo，人数
 + type          ：Data::GROUP_INFO
-+ groupId       ：目标群聊的Uid
-+ groupName     ：目标群聊的名字
-+ userCnt       ：群聊人数
++ senderUid     ：请求者的Uid
++ groupCnt      ：群聊人数
++ groupInfo     ：群聊的GroupInfo信息
 
 ## 获取群聊列表
 ### 请求方 (GetGroupList): 传入请求者uid和时间
@@ -207,8 +209,9 @@
 + senderUid     ：请求者的Uid
 + time          ：时间
 
-### 返回 (DGroupList): 传入用户uid，时间，群聊列表
+### 返回 (DGroupList): 传入请求者uid，用户uid，群聊列表
 + type          ：Data::GROUP_LIST
++ senderUid     ：请求者的Uid
 + userId        ：目标用户的Uid
 + groupList     ：目标用户的群聊的GroupInfo数组
 
@@ -219,8 +222,9 @@
 + receiverUid   ：目标群聊的Uid
 + time          ：时间
 
-### 返回 (DGroupUser): 传入群聊id，时间，成员列表
+### 返回 (DGroupUser): 传入请求者uid，群聊id，成员列表
 + type          ：Data::GROUP_USER
++ senderUid     ：请求者的Uid
 + groupId       ：目标群聊的Id
 + userList      ：目标群聊的成员UserInfo数组
 

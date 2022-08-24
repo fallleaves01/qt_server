@@ -57,6 +57,13 @@ class SocketClient {
     void sendFriendMessage(const Data&);
     void sendGroupMessage(const Data&);
     //请求型操作
+    void getUserInfo(const Data&);
+    void getFriendList(const Data&);
+    void getFriendMessage(const Data&);
+    void getGroupInfo(const Data&);
+    void getGroupList(const Data&);
+    void getGroupUser(const Data&);
+    void getGroupMessage(const Data&);
 };
 
 class SocketScanner {

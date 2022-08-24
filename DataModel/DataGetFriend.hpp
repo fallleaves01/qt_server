@@ -1,6 +1,6 @@
 #pragma once
-#include "encoding.h"
 #include "Message.hpp"
+#include "encoding.h"
 using namespace Encoding;
 
 class GetUserInfo : public Data {
@@ -17,51 +17,51 @@ class DUserInfo : public Data {
     UserInfo info;
 
    public:
-    DUserInfo(const UserInfo& _info, int _state)
-        : Data(Data::USER_INFO, _info.getId(), _state, "", _info.getName()),
+    DUserInfo(int _senderUid, const UserInfo& _info, int _state)
+        : Data(Data::USER_INFO, _senderUid, _state, "", encodeUserInfo(_info)),
           info(_info) {}
 
     DUserInfo(const std::string s) : Data(s) {
-        info = UserInfo(getSenderUid(), getContent());
+        DataStream ds(getContent());
+        ds >> info;
     }
-    DUserInfo(const Data &d) : Data(d) {
-        info = UserInfo(getSenderUid(), getContent());
+    DUserInfo(const Data& d) : Data(d) {
+        DataStream ds(getContent());
+        ds >> info;
     }
 
-    UserInfo getInfo() const {
-        return info;
-    }
-    int getState() const {
-        return getReceiverUid();
-    }
+    UserInfo getUserInfo() const { return info; }
+    int getState() const { return getReceiverUid(); }
 
     static const int OFFLINE = 0;
     static const int ONLINE = 1;
 };
 
 class GetFriendList : public Data {
+   public:
     GetFriendList(int _senderUid, const std::string _time)
         : Data(Data::GET_FRIEND_LIST, _senderUid, 0, _time, "") {}
-    
-    GetFriendList(const std::string &s) : Data(s) {}
-    GetFriendList(const Data &d) : Data(d) {}
+
+    GetFriendList(const std::string& s) : Data(s) {}
+    GetFriendList(const Data& d) : Data(d) {}
 };
 
 class DFriendList : public Data {
+   public:
     std::vector<UserInfo> friendList;
-    DFriendList(int _uid, std::vector<UserInfo> _friendList)
-        : Data(Data::FRIEND_LIST, _uid, 0, "", encodeArray(_friendList)), friendList(_friendList) {}
+    DFriendList(int _senderUid, int _userId, const std::vector<UserInfo> &_friendList)
+        : Data(Data::FRIEND_LIST, _senderUid, _userId, "", encodeArray(_friendList)),
+          friendList(_friendList) {}
 
-    DFriendList(const std::string &s) : Data(s) {
+    DFriendList(const std::string& s) : Data(s) {
         friendList = decodeArray<UserInfo>(getContent());
     }
-    DFriendList(const Data &d) : Data(d) {
+    DFriendList(const Data& d) : Data(d) {
         friendList = decodeArray<UserInfo>(getContent());
     }
 
-    std::vector<UserInfo> getFriendList() {
-        return friendList;
-    }
+    std::vector<UserInfo> getFriendList() { return friendList; }
+    int getUserId() const { return getReceiverUid(); }
 };
 
 class GetFriendMessage : public Data {
@@ -89,11 +89,11 @@ class DFriendMessageList : public Data {
                encodeArray(_message)),
           message(_message) {}
 
-    DFriendMessageList(const std::string &s) : Data(s) {
+    DFriendMessageList(const std::string& s) : Data(s) {
         ChatMessage tmp(0);
         message = decodeArray<ChatMessage>(getContent(), tmp);
     }
-    DFriendMessageList(const Data &d) : Data(d) {
+    DFriendMessageList(const Data& d) : Data(d) {
         ChatMessage tmp(0);
         message = decodeArray<ChatMessage>(getContent(), tmp);
     }
