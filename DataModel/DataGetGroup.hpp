@@ -75,7 +75,7 @@ class DGroupUser : public Data {
    public:
     DGroupUser(int _senderUid, int _groupId,
                const std::vector<UserInfo>& _userList)
-        : Data(Data::GET_GROUP_USER,
+        : Data(Data::GROUP_USER,
                 _senderUid,
                _groupId,
                "",
