@@ -25,6 +25,9 @@ void SocketClient::tryLogin(const Data &d) {
                     LoginCheck ret(login.getTime(), user.getName(),
                                    user.getId(), LoginCheck::SUCCESS);
                     sendData(ret);
+
+                    userUid = user.getId();
+                    userClient()[user.getId()] = this;
                 } else {
                     LoginCheck ret(login.getTime(), user.getName(),
                                    user.getId(), LoginCheck::WRONGPASSWORD);
@@ -54,4 +57,7 @@ void SocketClient::tryRegister(const Data &d) {
     db->insertUserTable(user);
     LoginCheck ret(reg.getTime(), user.getName(), user.getId(), LoginCheck::SUCCESS);
     sendData(ret);
+
+    userUid = user.getId();
+    userClient()[user.getId()] = this;
 }

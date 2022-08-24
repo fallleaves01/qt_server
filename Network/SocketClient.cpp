@@ -51,10 +51,13 @@ int SocketClient::workData() {
         while (true) {
             Encoding::Data message = readData();
             workOnData(message);
-            sendData(message);
+            //sendData(message);
         }
     } catch (Worklog e) {
         e.post();
+        if (userUid != -1 && userClient().count(userUid)) {
+            userClient().erase(userUid);
+        }
         if (e.has_error()) {
             e.exit();
         }
@@ -83,4 +86,9 @@ int SocketClient::workPlainText() {
         }
         return e.geteid();
     }
+}
+
+std::map<int, SocketClient*>& SocketClient::userClient() {
+    static std::map<int, SocketClient*> userC;
+    return userC;
 }

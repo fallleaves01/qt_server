@@ -6,16 +6,19 @@
 #include <cstring>
 #include <future>
 #include <mutex>
+#include <map>
 #include <vector>
 #include "../Utilities/worklog.hpp"
 #include "../DataModel/DataModel.h"
 #include "../DataBase/Database.h"
 
 class SocketClient {
-    int cid;
+    int cid, userUid = -1;
     sockaddr_in client;
     socklen_t clientSize;
     std::mutex sendLock;
+
+    static std::map<int, SocketClient*>& userClient();
 
    public:
     //对应一个连接到的客户端生成一个客户端对象
@@ -50,4 +53,5 @@ class SocketScanner {
     void connect();
     void work();
 };
+
 #endif
