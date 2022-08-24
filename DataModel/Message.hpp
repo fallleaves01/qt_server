@@ -1,5 +1,7 @@
 #include "encoding.h"
 #include "../DataBase/ChatMessage.h"
+#include "../DataBase/UserInfo.h"
+#include "../DataBase/GroupInfo.h"
 using namespace Encoding;
 
 class DFriendMessage : public Data {
@@ -53,3 +55,41 @@ class DGroupMessage : public Data {
         return getReceiverUid();
     }
 };
+
+inline DataStream &operator<<(DataStream &ds, const UserInfo &info) {
+    ds << info.getId() << info.getName();
+    return ds;
+}
+inline DataStream &operator>>(DataStream &ds, UserInfo &info) {
+    int id;
+    std::string name;
+    ds >> id >> name;
+    info = UserInfo(id, name);
+    return ds;
+}
+
+inline DataStream &operator<<(DataStream &ds, const GroupInfo &info) {
+    ds << info.getId() << info.getName();
+    return ds;
+}
+inline DataStream &operator>>(DataStream &ds, GroupInfo &info) {
+    int id;
+    std::string name;
+    ds >> id >> name;
+    info = GroupInfo(id, name);
+    return ds;
+}
+
+inline DataStream &operator<<(DataStream &ds, const ChatMessage &message) {
+    ds << message.getSender();
+    ds << message.getReceiver();
+    ds << message.getTimeStemp();
+    ds << message.getContent();
+    return ds;
+}
+inline DataStream &operator>>(DataStream &ds, ChatMessage &message) {
+    int sender, receiver;
+    std::string time, content;
+    ds >> sender >> receiver >> time >> content;
+    return ds;
+}

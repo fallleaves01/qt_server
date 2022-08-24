@@ -169,7 +169,7 @@
 + type          ：Data::FRIEND_MESSAGE_LIST
 + senderUid     ：请求者的Uid
 + friendUid     ：目标好友的Uid
-+ messageList   ：目标好友的FriendMessage数组
++ messageList   ：目标好友的ChatMessage数组
 
 ## 获取群聊信息
 ### 请求方 (GetGroupInfo): 传入请求者uid，目标群聊uid和时间
@@ -210,7 +210,7 @@
 ### 请求方 (GetGroupMessage): 传入请求者uid，目标群聊uid和时间
 + type          ：Data::GET_GROUP_MESSAGE
 + senderUid     ：请求者的Uid
-+ receiverUid   ：目标群聊的Uid
++ groupId   ：目标群聊的Uid
 + time          ：时间
 
 ### 返回 (DGroupMessageList): 传入请求者id，群聊id和消息列表

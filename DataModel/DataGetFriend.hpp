@@ -1,5 +1,5 @@
 #include "encoding.h"
-#include "../DataBase/UserInfo.h"
+#include "Message.hpp"
 using namespace Encoding;
 
 class GetUserInfo : public Data {
@@ -46,18 +46,6 @@ class GetFriendList : public Data {
     GetFriendList(const Data &d) : Data(d) {}
 };
 
-inline DataStream &operator<<(DataStream &ds, UserInfo info) {
-    ds << info.getId() << info.getName();
-    return ds;
-}
-inline DataStream &operator>>(DataStream &ds, UserInfo &info) {
-    int id;
-    std::string name;
-    ds >> id >> name;
-    info = UserInfo(id, name);
-    return ds;
-}
-
 class DFriendList : public Data {
     std::vector<UserInfo> friendList;
     DFriendList(int _uid, std::vector<UserInfo> _friendList)
@@ -72,5 +60,42 @@ class DFriendList : public Data {
 
     std::vector<UserInfo> getFriendList() {
         return friendList;
+    }
+};
+
+class GetFriendMessage : public Data {
+   public:
+    GetFriendMessage(int _senderUid, int _friendUid, const std::string& _time)
+        : Data(Data::GET_FRIEND_MESSAGE, _senderUid, _friendUid, _time, "") {}
+
+    GetFriendMessage(const std::string& s) : Data(s) {}
+    GetFriendMessage(const Data& d) : Data(d) {}
+
+    int getFriendUid() const { return getReceiverUid(); }
+};
+
+class DFriendMessageList : public Data {
+    std::vector<ChatMessage> message;
+
+   public:
+    DFriendMessageList(int _senderUid,
+                       int _friendUid,
+                       const std::vector<ChatMessage>& _message)
+        : Data(Data::FRIEND_MESSAGE_LIST,
+               _senderUid,
+               _friendUid,
+               "",
+               encodeArray(_message)),
+          message(_message) {}
+
+    DFriendMessageList(const std::string &s) : Data(s) {
+        message = decodeArray<ChatMessage>(getContent());
+    }
+    DFriendMessageList(const Data &d) : Data(d) {
+        message = decodeArray<ChatMessage>(getContent());
+    }
+
+    std::vector<ChatMessage> getMessageList() const {
+        return message;
     }
 };
