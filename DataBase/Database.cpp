@@ -144,6 +144,7 @@ void Database::insertGroupTable(GroupInfo group)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -170,6 +171,7 @@ void Database::insertChatMsgTable(ChatMessage msg)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -187,6 +189,7 @@ void Database::insertFriendShipTable(int userId1, int userId2)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -205,6 +208,7 @@ void Database::insertGroupShipTable(int groupid, int userId,int permission)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -228,6 +232,7 @@ UserInfo Database::getUserInfo(int userId)
 			std::string pwd = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
 			temp = UserInfo(id,name,pwd);
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -249,6 +254,7 @@ UserInfo Database::getUserInfoNoPwd(int userId)
 			std::string name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
 			temp = UserInfo(id, name);
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -270,6 +276,7 @@ GroupInfo Database::getGroupInfo(int groupId)
 			std::string name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
 			temp = GroupInfo(id, name);
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -288,6 +295,7 @@ std::vector<int>* Database::getAllUserId()
 		while (sqlite3_step(stmt)== SQLITE_ROW) {
 			temp->push_back(sqlite3_column_int(stmt, 0));
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -307,6 +315,7 @@ std::vector<int>* Database::getAllGroupId()
 		while (sqlite3_step(stmt) == SQLITE_ROW) {
 			temp->push_back(sqlite3_column_int(stmt, 0));
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -336,6 +345,7 @@ std::vector<int>* Database::getFriendsId(int userId)
 				temp->push_back(id2);
 			}
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -356,6 +366,7 @@ std::vector<int>* Database::getGroupMembersId(int groupId)
 			int id = sqlite3_column_int(stmt, 0);
 			temp->push_back(id);
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -377,6 +388,7 @@ std::vector<int>* Database::getGroupListId(int userId)
 			int id = sqlite3_column_int(stmt,0);
 			temp->push_back(id);
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -397,6 +409,7 @@ int Database::getUserPermission(int userId, int groupId)
 		while (sqlite3_step(stmt) == SQLITE_ROW) {
 			per = sqlite3_column_int(stmt, 0);
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -411,7 +424,8 @@ std::vector<ChatMessage>* Database::getUserChatMessage(int Id1,int Id2)
 		sqlite3_stmt* stmt;
 		int sender, receiver;
 		std::string time, content;
-		std::string sql = "select * from ChatMsgTable where (Sender=? and Receiver=?) or (Sender=? and Receiver=?);";
+		std::string sql = "select * from ChatMsgTable where (Sender=? and Receiver=?)\
+						 or (Sender=? and Receiver=?) order by Time desc;";
 		sqlite3_prepare_v2(handler, sql.c_str(), -1, &stmt, 0);
 		sqlite3_bind_int(stmt,1, Id1);
 		sqlite3_bind_int(stmt, 2, Id2);
@@ -425,6 +439,7 @@ std::vector<ChatMessage>* Database::getUserChatMessage(int Id1,int Id2)
 			content = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
 			temp->push_back(ChatMessage(sender,receiver,time,content));
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -439,7 +454,7 @@ std::vector<ChatMessage>* Database::getGroupChatMessage(int groupId)
 		sqlite3_stmt* stmt;
 		int sender, receiver;
 		std::string time, content;
-		std::string sql = "select * from ChatMsgTable where Receiver=?;";
+		std::string sql = "select * from ChatMsgTable where Receiver=? order by Time desc;";
 		sqlite3_prepare_v2(handler, sql.c_str(), -1, &stmt, 0);
 		sqlite3_bind_int(stmt, 1, groupId);
 		// 处理查找到的每一条信息
@@ -450,6 +465,7 @@ std::vector<ChatMessage>* Database::getGroupChatMessage(int groupId)
 			content = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
 			temp->push_back(ChatMessage(sender, receiver, time, content));
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -502,6 +518,7 @@ std::vector<UserInfo>* Database::getAllUserNoPwd()
 			name= reinterpret_cast<const char*>(sqlite3_column_text(stmt,1));
 			temp->push_back(UserInfo(id,name));
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -525,6 +542,7 @@ std::vector<GroupInfo>* Database::getAllGroup()
 			name = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
 			temp->push_back(GroupInfo(id, name));
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -547,6 +565,7 @@ void Database::changeUserName(int userId, std::string newName)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -564,6 +583,7 @@ void Database::changeUserPwd(int userId, std::string newPwd)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -581,6 +601,7 @@ void Database::changeGroupName(int groupId, std::string newName)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -599,6 +620,7 @@ void Database::changeUserPermission(int userID, int groupId, int per)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -635,6 +657,7 @@ void Database::delUser(int userId)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -654,6 +677,7 @@ void Database::delUserFriend(int userId1, int userId2)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -671,6 +695,7 @@ void Database::delGroupShip(int userId, int groupId)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {
@@ -697,6 +722,7 @@ void Database::delGroup(int groupId)
 		if (sqlite3_step(stmt) != SQLITE_DONE) {
 			std::cout << sqlite3_errmsg(handler) << std::endl;
 		}
+		sqlite3_finalize(stmt);
 		sqlite3_close(handler);
 	}
 	else {

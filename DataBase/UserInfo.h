@@ -8,11 +8,11 @@ private:
     std::string pwd;
 public:
     explicit UserInfo(int id=0,std::string name="",std::string pwd="");
-    //¶ÔÓÚGroupInfoµÄQByteArray±àÂë·½Ê½
+    //ï¿½ï¿½ï¿½ï¿½GroupInfoï¿½ï¿½QByteArrayï¿½ï¿½ï¿½ë·½Ê½
     //  quint32 id|nameSize| Qstring name|pwdSize | QString pwd
-    int getId();
-    std::string getName();
-    std::string getPwd();
+    int getId() const;
+    std::string getName() const;
+    std::string getPwd() const;
 };
 
 

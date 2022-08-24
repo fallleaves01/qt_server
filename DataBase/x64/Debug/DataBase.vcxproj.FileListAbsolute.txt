@@ -1,2 +1,1 @@
 D:\Compiler\Code_test\Cpp\DataBase\x64\Debug\DataBase.exe
-C:\Users\92106\Desktop\DataBase\x64\Debug\DataBase.exe

@@ -7,13 +7,13 @@ GroupInfo::GroupInfo(
 {
 }
 
-int GroupInfo::getId()
+int GroupInfo::getId() const
 {
     return id;
 }
 
 
-std::string GroupInfo::getName()
+std::string GroupInfo::getName() const
 {
     return name;
 }

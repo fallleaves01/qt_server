@@ -8,7 +8,8 @@
 #include <mutex>
 #include <vector>
 #include "../Utilities/worklog.hpp"
-#include "../DataModel/encoding.h"
+#include "../DataModel/DataModel.h"
+#include "../DataBase/Database.h"
 
 class SocketClient {
     int cid;
@@ -49,6 +50,10 @@ class SocketClient {
         }
         Encoding::Data rec(dataStr);
         std::cerr << "received content : " << rec.getContent() << std::endl;
+        if (rec.getType() == Encoding::Data::LOGIN_MESSAGE) {
+            LoginMessage login(rec);
+            std::cerr << "user " << login.getUserName() << " tried to login with password " << login.getPassword() << std::endl;
+        }
         return rec;
     }
 

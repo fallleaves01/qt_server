@@ -8,9 +8,9 @@ private:
     std::string name;
 public:
     explicit GroupInfo(int id = 0, std::string name = "");
-    //¶ÔÓÚGroupInfoµÄQByteArray±àÂë·½Ê½
-    int getId();
-    std::string getName();
+    //ï¿½ï¿½ï¿½ï¿½GroupInfoï¿½ï¿½QByteArrayï¿½ï¿½ï¿½ë·½Ê½
+    int getId() const;
+    std::string getName() const;
 
 };
 

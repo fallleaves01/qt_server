@@ -141,6 +141,20 @@ class Data {
     static const int ADD_GROUP_CHECK = 9;
     static const int FRIEND_MESSAGE = 10;
     static const int GROUP_MESSAGE = 11;
+    static const int GET_USER_INFO = 12;
+    static const int USER_INFO = 13;
+    static const int GET_FRIEND_LIST = 14;
+    static const int FRIEND_LIST = 15;
+    static const int GET_FRIEND_MESSAGE = 16;
+    static const int FRIEND_MESSAGE_LIST = 17;
+    static const int GET_GROUP_INFO = 18;
+    static const int GROUP_INFO = 19;
+    static const int GET_GROUP_LIST = 20;
+    static const int GROUP_LIST = 21;
+    static const int GET_GROUP_USER = 22;
+    static const int GROUP_USER = 23;
+    static const int GET_GROUP_MESSAGE = 24;
+    static const int GROUP_MESSAGE_LIST = 25;
 };
 }  // namespace Encoding
 

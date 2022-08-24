@@ -15,6 +15,10 @@ void printChatMsg(ChatMessage ref) {
 }
 int main()
 {
+	vector<ChatMessage>* msg = Database::getDatabase()->getUserChatMessage(1001,1003);
+	for (int i = 0; i < msg->size(); ++i) {
+		printChatMsg((* msg)[i]);
+	}
 	return 0;
 }
 

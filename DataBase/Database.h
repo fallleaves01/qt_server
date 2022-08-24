@@ -33,7 +33,8 @@ public:
 	GroupInfo getGroupInfo(int groupId);    // 得到group 信息
 
 	int getUserPermission(int userId, int groupId);                // 得到用户在群聊中的权限
-	std::vector<ChatMessage>* getUserChatMessage(int Id1,int Id2); // 得到连个用户的聊天记录
+	// 得到的聊天记录按时间的先后进行排序，坐标小的时间近
+	std::vector<ChatMessage>* getUserChatMessage(int Id1,int Id2); // 得到两个用户的聊天记录
 	std::vector<ChatMessage>* getGroupChatMessage(int groupId);    // 得到群聊的聊天记录
 	std::vector<UserInfo>* getUserFriends(int userId);             // 得到用户的朋友信息 id+name
 	std::vector<UserInfo>* getGroupMembersNoPwd(int groupId);      // 得到群聊成员的信息 id+name

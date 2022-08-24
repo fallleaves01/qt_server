@@ -9,17 +9,17 @@ UserInfo::UserInfo(
 }
 
 // quint32 id |nameSize| Qstring name|pwdSize| pwd
-int UserInfo::getId()
+int UserInfo::getId() const
 {
     return id;
 }
 
-std::string UserInfo::getPwd()
+std::string UserInfo::getPwd() const
 {
     return pwd;
 }
 
-std::string UserInfo::getName()
+std::string UserInfo::getName() const
 {
     return name;
 
