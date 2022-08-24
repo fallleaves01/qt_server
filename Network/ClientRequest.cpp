@@ -18,7 +18,7 @@ void SocketClient::getFriendList(const Data &d) {
     for (auto uid : *friendsId) {
         friendList.emplace_back(db->getUserInfoById(uid));
     }
-    DFriendList ret(get.getSenderUid(), get.getReceiverUid(), friendList);
+    DFriendList ret(get.getSenderUid(), get.getSenderUid(), friendList);
     sendDataToUid(get.getSenderUid(), ret);
     delete friendsId;
 }

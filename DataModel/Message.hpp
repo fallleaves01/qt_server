@@ -104,5 +104,6 @@ inline DataStream &operator>>(DataStream &ds, ChatMessage &message) {
     int sender, receiver;
     std::string time, content;
     ds >> sender >> receiver >> time >> content;
+    message = ChatMessage(sender, receiver, time, content);
     return ds;
 }

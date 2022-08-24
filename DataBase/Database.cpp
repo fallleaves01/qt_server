@@ -577,7 +577,7 @@ std::vector<UserInfo>* Database::getUserFriendsNoPwd(int userId)
 {
 	std::vector<UserInfo>* temp = new std::vector<UserInfo>();
 	std::vector<int>* id = Database::getDatabase()->getFriendsId(userId);
-	for (int i = 0; i < (*id).size(); ++i) {
+	for (int i = 0; i < (int)(*id).size(); ++i) {
 		temp->push_back(Database::getDatabase()->getUserInfoByIdNoPwd((*id)[i]));
 	}
 	delete id;
@@ -611,7 +611,7 @@ std::vector<GroupInfo>* Database::getGroupList(int userId)
 {
 	std::vector<GroupInfo>* temp = new std::vector<GroupInfo>();
 	std::vector<int>* id = Database::getDatabase()->getGroupListId(userId);
-	for (int i = 0; i < (*id).size(); ++i) {
+	for (int i = 0; i < (int)(*id).size(); ++i) {
 		temp->push_back(Database::getDatabase()->getGroupInfo((*id)[i]));
 	}
 	delete id;
