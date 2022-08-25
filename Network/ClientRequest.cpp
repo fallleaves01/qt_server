@@ -19,6 +19,7 @@ void SocketClient::getFriendList(const Data &d) {
     for (auto uid : *friendsId) {
         friendList.emplace_back(db->getUserInfoById(uid));
     }
+    std::cerr << get.getSenderUid() << " required friend list " << std::endl;
     DFriendList ret(get.getSenderUid(), get.getSenderUid(), friendList);
     sendDataToUid(get.getSenderUid(), ret);
     delete friendsId;

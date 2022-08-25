@@ -131,6 +131,7 @@ void SocketClient::tryCreateGroup(const Data &d) {
 
     std::string name = gp.getGroupName();
     GroupInfo groupInfo(groupId, name);
+    std::cerr << "created group with id " << groupId << ' ' << name << std::endl;
     db->insertGroupTable(groupInfo);
     CreateGroupCheck ret(gp.getCreaterUid(), groupId, gp.getTime());
     sendData(ret);
