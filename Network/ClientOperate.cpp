@@ -1,6 +1,7 @@
 #include "scanner.h"
 
 void SocketClient::workOnData(const Data &d) {
+    std::cerr << "received type " << d.getType() << std::endl;
     switch (d.getType()) {
         case (Data::LOGIN_MESSAGE):
             tryLogin(d);
@@ -118,6 +119,13 @@ void SocketClient::addFriendCheck(const Data &d) {
         auto db = Database::getDatabase();
         db->insertFriendShipTable(addfc.getSenderUid(), addfc.getReceiverUid());
         std::cerr << "add friendship " << addfc.getSenderUid() << " and " << addfc.getReceiverUid() << std::endl;
+
+        {
+            std::cerr << "send message back to receiver" << std::endl;
+            AddFriendMessage message(addfc.getReceiverUid(), addfc.getSenderUid(), "", "");
+            AddFriendCheck chk(message, AddFriendCheck::SUCCESS);
+            sendDataToUid(addfc.getReceiverUid(), addfc);
+        }
     }
     sendDataToUid(addfc.getSenderUid(), addfc);
 }

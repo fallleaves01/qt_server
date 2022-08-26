@@ -24,7 +24,7 @@ void SocketScanner::connect() {
 }
 void SocketScanner::work() {
     std::vector<std::future<int>> fpool;
-    static SocketClient vec[100];
+    static SocketClient vec[10000];
     int cnt = 0;
     while (true) {
         vec[++cnt] = SocketClient(socketid);

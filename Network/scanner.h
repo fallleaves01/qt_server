@@ -16,7 +16,7 @@ class SocketClient {
     int cid, userUid = -1;
     sockaddr_in client;
     socklen_t clientSize;
-    std::mutex sendLock;
+    static std::mutex sendLock;
 
     static std::map<int, SocketClient*>& userClient();
 

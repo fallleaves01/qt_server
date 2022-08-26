@@ -1,10 +1,15 @@
-main: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o ClientRequest.o ./Network/scanner.h ./Utilities/worklog.hpp
-	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o ClientRequest.o -l pthread -l sqlite3 -Wall -std=c++17
-debug: main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o ClientRequest.o ./Network/scanner.h ./Utilities/worklog.hpp
-	g++ -o main main.cpp encoding.o Database.o GroupInfo.o UserInfo.o ChatMessage.o SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o ClientRequest.o -l pthread -l sqlite3 -Wall -std=c++17 -g
+database = Database.o GroupInfo.o UserInfo.o ChatMessage.o
+datamodel = encoding.o
+network = SocketClient.o SocketScanner.o ClientOperate.o ClientLogin.o ClientMessage.o ClientRequest.o
 
-encoding.o: ./DataModel/encoding.cpp ./DataModel/encoding.h
-	g++ -c ./DataModel/encoding.cpp -Wall -g
+dataModel_hpp = ./DataModel/DataAddFriend.hpp ./DataModel/DataGetFriend.hpp ./DataModel/DataGetGroup.hpp \
+./DataModel/DataGroup.hpp ./DataModel/DataLogin.hpp ./DataModel/Message.hpp
+
+main: $(database) $(datamodel) $(network)
+	g++ $(database) $(datamodel) $(network) main.cpp -o main -Wall -std=c++17 -lpthread -lsqlite3
+
+debug: $(database) $(datamodel) $(network)
+	g++ $(database) $(datamodel) $(network) main.cpp -o main -Wall -std=c++17 -lpthread -lsqlite3 -g
 
 Database.o: ./DataBase/Database.cpp ./DataBase/Database.h
 	g++ -c ./DataBase/Database.cpp -Wall -g
@@ -17,6 +22,9 @@ UserInfo.o: ./DataBase/UserInfo.cpp ./DataBase/UserInfo.h
 
 ChatMessage.o: ./DataBase/ChatMessage.cpp ./DataBase/ChatMessage.h
 	g++ -c ./DataBase/ChatMessage.cpp -Wall -g
+
+encoding.o: ./DataModel/encoding.cpp ./DataModel/encoding.h $(dataModel_hpp)
+	g++ -c ./DataModel/encoding.cpp -Wall -g
 
 SocketClient.o: ./Network/SocketClient.cpp ./Network/scanner.h
 	g++ -c ./Network/SocketClient.cpp -Wall -g
@@ -33,7 +41,7 @@ ClientLogin.o: ./Network/ClientLogin.cpp ./Network/scanner.h
 ClientMessage.o: ./Network/ClientMessage.cpp ./Network/scanner.h
 	g++ -c ./Network/ClientMessage.cpp -Wall -g
 
-ClientRequest.o: ./Network/ClientRequest.cpp ./Network/scanner.h
+ClientRequest.o: ./Network/scanner.h
 	g++ -c ./Network/ClientRequest.cpp -Wall -g
 
 clear:

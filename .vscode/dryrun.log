@@ -1,5 +1,0 @@
-make --dry-run --keep-going --print-directory
-make: Entering directory '/home/fallleaves01/project/qt/server'
-make: 'main' is up to date.
-make: Leaving directory '/home/fallleaves01/project/qt/server'
- 

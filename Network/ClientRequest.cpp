@@ -45,9 +45,11 @@ void SocketClient::getGroupInfo(const Data &d) {
 }
 
 void SocketClient::getGroupList(const Data &d) {
+    std::cerr << "get group list" << std::endl;
     GetGroupList get(d);
     auto db = Database::getDatabase();
     auto groupList = db->getGroupList(get.getSenderUid());
+    std::cerr << "size " << groupList->size() << std::endl;
     DGroupList ret(get.getSenderUid(), *groupList);
     sendDataToUid(get.getSenderUid(), ret);
     delete groupList;

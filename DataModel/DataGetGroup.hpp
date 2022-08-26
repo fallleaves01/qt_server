@@ -46,7 +46,7 @@ class DGroupList : public Data {
 
    public:
     DGroupList(int _senderUid, const std::vector<GroupInfo>& _groupList)
-        : Data(Data::GROUP_LIST, _senderUid, 0, "", encodeArray(groupList)) {}
+        : Data(Data::GROUP_LIST, _senderUid, 0, "", encodeArray(_groupList)) {}
 
     DGroupList(const std::string& s) : Data(s) {
         groupList = decodeArray<GroupInfo>(getContent());
